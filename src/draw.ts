@@ -1,7 +1,7 @@
 import { cornerGet } from './corner';
 import { fieldGetNeighbor } from './fields';
 import { hexGetCenter } from './hex';
-import { Field, Point } from './types';
+import { TField, Point } from './types';
 
 export const drawLine = (
   ctx: CanvasRenderingContext2D,
@@ -19,7 +19,7 @@ export const drawLine = (
 export const drawField = (
   ctx: CanvasRenderingContext2D,
   center: Point,
-  field: Field,
+  field: TField,
   size: number
 ) => {
   const hexCenter = hexGetCenter(center, field.hex, size);
@@ -38,7 +38,7 @@ export const drawField = (
 export const drawFieldLabel = (
   ctx: CanvasRenderingContext2D,
   center: Point,
-  field: Field,
+  field: TField,
   size: number
 ) => {
   const hexCenter = hexGetCenter(center, field.hex, size);

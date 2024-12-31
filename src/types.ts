@@ -3,7 +3,7 @@ export type Point = {
   y: number;
 };
 
-export type Field = {
+export type TField = {
   id: string;
   hex: Point;
 };

@@ -1,7 +1,7 @@
 import { hexGetId, hexGetNeighbor } from './hex';
-import { Field, Point } from './types';
+import { TField, Point } from './types';
 
-export const FIELDS = new Map<string, Field>();
+export const FIELDS = new Map<string, TField>();
 
 export const fieldCreate = (hex: Point) => {
   const field = {
