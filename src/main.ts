@@ -1,9 +1,9 @@
 import { cornerInit } from './corner';
-import { drawField, drawLine } from './draw';
+import { drawField, drawFieldLabel, drawLine } from './draw';
 import { Point } from './types';
 import './style.css';
 import { fieldCreate } from './fields';
-import { hexGetNeighbor } from './hex';
+import { hexGetCricle } from './hex';
 
 const canvas = document.querySelector('#canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -82,38 +82,20 @@ window.addEventListener('mousedown', (e) => {
 draw();
 */
 
-const hexGetCricle = (radius: number) => {
-  const results: Point[] = [];
-
-  let hex: Point = {
-    x: -1 * radius,
-    y: 1 * radius,
-  };
-
-  for (let i = 0; i < 6; i++) {
-    for (let j = 0; j < radius; j++) {
-      results.push(hex);
-      hex = hexGetNeighbor(hex, i);
-    }
-  }
-
-  console.log(results);
-
-  return results;
-};
-
 const drawHexCircle = (center: Point, radius: number, size: number) => {
   let field;
   const circle = hexGetCricle(radius);
   for (let hex of circle) {
     field = fieldCreate(hex);
     drawField(ctx, center, field, size);
+    drawFieldLabel(ctx, center, field, size);
   }
 };
 
 const drawFields = (center: Point, max: number, size: number) => {
   let field = fieldCreate({ x: 0, y: 0 });
   drawField(ctx, center, field, size);
+  drawFieldLabel(ctx, center, field, size);
 
   for (let radius = 1; radius < max; radius++) {
     drawHexCircle(center, radius, size);
@@ -132,22 +114,3 @@ drawLine(ctx, { x: center.x, y: 0 }, { x: center.x, y: 2 * center.y });
 drawLine(ctx, { x: 0, y: center.y }, { x: 2 * center.x, y: center.y });
 
 drawFields(center, 3, size);
-
-/*
-drawHexCircle(center, 2, size);
-
-let field = fieldCreate({ x: 0, y: 0 });
-drawField(ctx, center, field, size);
-*/
-
-/*
-
-field = fieldCreate({ x: 0, y: -1 });
-drawField(ctx, center, field, size);
-
-field = fieldCreate({ x: 1, y: -1 });
-drawField(ctx, center, field, size);
-
-field = fieldCreate({ x: -1, y: 1 });
-drawField(ctx, center, field, size);
-*/

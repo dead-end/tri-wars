@@ -22,23 +22,28 @@ export const drawField = (
   field: Field,
   size: number
 ) => {
-  const fieldCenter = hexGetCenter(center, field.hex, size);
+  const hexCenter = hexGetCenter(center, field.hex, size);
 
   for (let i = 0; i < 6; i++) {
     const neighbor = fieldGetNeighbor(field.hex, i);
 
     if (!neighbor) {
-      const start = cornerGet(fieldCenter, i, size);
-      const end = cornerGet(fieldCenter, i + 1, size);
+      const start = cornerGet(hexCenter, i, size);
+      const end = cornerGet(hexCenter, i + 1, size);
       drawLine(ctx, start, end);
     }
   }
+};
+
+export const drawFieldLabel = (
+  ctx: CanvasRenderingContext2D,
+  center: Point,
+  field: Field,
+  size: number
+) => {
+  const hexCenter = hexGetCenter(center, field.hex, size);
 
   ctx.fillStyle = '#aa0099';
   ctx.font = '1em Arial';
-  ctx.fillText(
-    `${field.hex.x}:${field.hex.y}`,
-    fieldCenter.x - 10,
-    fieldCenter.y + 5
-  );
+  ctx.fillText(field.id, hexCenter.x - 10, hexCenter.y + 5);
 };
