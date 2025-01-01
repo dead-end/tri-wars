@@ -1,4 +1,4 @@
-import { hexCorner } from './hex/corner';
+import { hexCornerGet } from './hex/corner';
 import { fieldGetNeighbor } from './fields';
 import { hexGetCenter } from './hex2';
 import { TField, Point } from './types';
@@ -28,8 +28,8 @@ export const drawField = (
     const neighbor = fieldGetNeighbor(field.hex, i);
 
     if (!neighbor) {
-      const start = hexCorner(hexCenter, i, size);
-      const end = hexCorner(hexCenter, i + 1, size);
+      const start = hexCornerGet(hexCenter, i, size);
+      const end = hexCornerGet(hexCenter, i + 1, size);
       drawLine(ctx, start, end);
     }
   }

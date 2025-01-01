@@ -23,7 +23,7 @@ const init = () => {
 
 const corners: Point[] = init();
 
-export const hexCorner = (center: Point, i: number, size: number): Point => {
+export const hexCornerGet = (center: Point, i: number, size: number): Point => {
   const idx = mod(i, 6);
   return {
     x: center.x + size * corners[idx].x,
