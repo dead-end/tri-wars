@@ -1,4 +1,5 @@
-import { hexGetId, hexGetNeighbor } from './hex';
+import { hexGetId } from './hex2';
+import { hexNeighbor } from './hex/neighbor';
 import { TField, Point } from './types';
 
 export const FIELDS = new Map<string, TField>();
@@ -13,7 +14,7 @@ export const fieldCreate = (hex: Point) => {
 };
 
 export const fieldGetNeighbor = (point: Point, i: number) => {
-  const neighbor = hexGetNeighbor(point, i);
+  const neighbor = hexNeighbor(point, i);
   const id = hexGetId(neighbor);
   return FIELDS.get(id);
 };

@@ -1,27 +1,10 @@
+import { hexNeighbor } from './hex/neighbor';
 import { Point } from './types';
-import { mod } from './utils';
 
 const SQR_3 = Math.sqrt(3);
 
-const HEX_NEIGHBOR: Point[] = [
-  { x: 0, y: -1 },
-  { x: 1, y: -1 },
-  { x: 1, y: 0 },
-  { x: 0, y: 1 },
-  { x: -1, y: 1 },
-  { x: -1, y: 0 },
-];
-
 export const hexGetId = (point: Point) => {
   return `${point.x},${point.y}`;
-};
-
-export const hexGetNeighbor = (point: Point, i: number): Point => {
-  const neighbor = HEX_NEIGHBOR[mod(i, 6)];
-  return {
-    x: point.x + neighbor.x,
-    y: point.y + neighbor.y,
-  };
 };
 
 export const hexGetCenter = (
@@ -46,7 +29,7 @@ export const hexGetCricle = (radius: number) => {
   for (let i = 0; i < 6; i++) {
     for (let j = 0; j < radius; j++) {
       results.push(hex);
-      hex = hexGetNeighbor(hex, i);
+      hex = hexNeighbor(hex, i);
     }
   }
 

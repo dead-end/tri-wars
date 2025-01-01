@@ -1,5 +1,5 @@
-import { Point } from './types';
-import { mod } from './utils';
+import { Point } from '../types';
+import { mod } from '../utils';
 
 /**
  * 0: -120 degree (top left)
@@ -7,7 +7,7 @@ import { mod } from './utils';
  * 2: 0 degree (right)
  * ...
  */
-const cornerInit = () => {
+const init = () => {
   const result: Point[] = [];
   for (let i = -2; i < 4; i++) {
     const degree = 60 * i;
@@ -21,9 +21,9 @@ const cornerInit = () => {
   return result;
 };
 
-const corners: Point[] = cornerInit();
+const corners: Point[] = init();
 
-export const cornerGet = (center: Point, i: number, size: number): Point => {
+export const hexCorner = (center: Point, i: number, size: number): Point => {
   const idx = mod(i, 6);
   return {
     x: center.x + size * corners[idx].x,
