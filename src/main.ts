@@ -1,7 +1,7 @@
 import './style.css';
 import { hexCornerGet } from './hex/corner';
 import { drawCricle, drawLine } from './draw';
-import { Point, TField } from './types';
+import { TPoint, TField } from './types';
 import { fieldCreate } from './fields';
 import { hexNeighbor } from './hex/neighbor';
 import { hexCenterGet } from './hex/center';
@@ -37,13 +37,13 @@ const areaInit = () => {
   }
 };
 
-const areaInside = (point: Point) => {
+const areaInside = (point: TPoint) => {
   return point.x >= 0 && point.x < COLS && point.y >= 0 && point.y < ROWS;
 };
 
 const drawAreadField = (
   ctx: CanvasRenderingContext2D,
-  center: Point,
+  center: TPoint,
   field: TField,
   size: number
 ) => {
@@ -63,7 +63,7 @@ const drawAreadField = (
 
 export const drawAreaFieldLabel = (
   ctx: CanvasRenderingContext2D,
-  center: Point,
+  center: TPoint,
   field: TField,
   size: number
 ) => {
@@ -93,7 +93,7 @@ areaInit();
 
 areaDraw();
 
-const mouse: Point = {
+const mouse: TPoint = {
   x: -1,
   y: -1,
 };
@@ -106,7 +106,7 @@ const draw = () => {
   areaDraw();
 
   if (mouse.x >= 0 && mouse.y >= 0) {
-    const center: Point = { x: mouse.x, y: mouse.y };
+    const center: TPoint = { x: mouse.x, y: mouse.y };
     drawCricle(ctx, center);
     const coords = pixel2FlatHex(center, size, origin);
     console.log(coords);

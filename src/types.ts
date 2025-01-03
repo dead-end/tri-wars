@@ -1,8 +1,8 @@
-export type Point = {
+export type TPoint = {
   x: number;
   y: number;
 };
 
 export type TField = {
-  hex: Point;
+  hex: TPoint;
 };

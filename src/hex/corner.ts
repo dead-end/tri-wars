@@ -1,4 +1,4 @@
-import { Point } from '../types';
+import { TPoint } from '../types';
 import { mod } from '../utils';
 
 /**
@@ -8,7 +8,7 @@ import { mod } from '../utils';
  * ...
  */
 const init = () => {
-  const result: Point[] = [];
+  const result: TPoint[] = [];
   for (let i = -2; i < 4; i++) {
     const degree = 60 * i;
     const rad = (Math.PI / 180) * degree;
@@ -21,9 +21,13 @@ const init = () => {
   return result;
 };
 
-const corners: Point[] = init();
+const corners: TPoint[] = init();
 
-export const hexCornerGet = (center: Point, i: number, size: number): Point => {
+export const hexCornerGet = (
+  center: TPoint,
+  i: number,
+  size: number
+): TPoint => {
   const idx = mod(i, 6);
   return {
     x: center.x + size * corners[idx].x,

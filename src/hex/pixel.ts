@@ -1,4 +1,4 @@
-import { Point } from '../types';
+import { TPoint } from '../types';
 import { SQR_3 } from '../utils';
 
 /**
@@ -13,7 +13,7 @@ type TCube = {
 /**
  * axial coordinates to offset coordinates
  */
-const axial2Off = (hex: Point): Point => {
+const axial2Off = (hex: TPoint): TPoint => {
   return {
     x: hex.x,
     y: hex.y + (hex.x - (hex.x % 2)) / 2,
@@ -23,7 +23,7 @@ const axial2Off = (hex: Point): Point => {
 /**
  * cube coordinates to axial coordinates
  */
-const cube2Axial = (cube: TCube): Point => {
+const cube2Axial = (cube: TCube): TPoint => {
   return {
     x: cube.q,
     y: cube.r,
@@ -33,7 +33,7 @@ const cube2Axial = (cube: TCube): Point => {
 /**
  * axial coordinates to cube coordinates
  */
-const axial2Cube = (axial: Point): TCube => {
+const axial2Cube = (axial: TPoint): TCube => {
   return {
     q: axial.x,
     r: axial.y,
@@ -64,7 +64,7 @@ const cubeRound = (frac: TCube): TCube => {
   return { q, r, s };
 };
 
-const axialRound = (axial: Point) => {
+const axialRound = (axial: TPoint) => {
   return cube2Axial(cubeRound(axial2Cube(axial)));
 };
 
@@ -75,11 +75,11 @@ const axialRound = (axial: Point) => {
  *
  * See: https://www.redblobgames.com/grids/hexagons/
  */
-export const pixel2FlatHex = (point: Point, size: number, origin: Point) => {
+export const pixel2FlatHex = (point: TPoint, size: number, origin: TPoint) => {
   point.x -= origin.x;
   point.y -= origin.y;
 
-  const axialFrac: Point = {
+  const axialFrac: TPoint = {
     x: ((2 / 3) * point.x) / size,
     y: ((-1 / 3) * point.x + (SQR_3 / 3) * point.y) / size,
   };

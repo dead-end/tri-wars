@@ -1,9 +1,9 @@
-import { Point } from './types';
+import { TPoint } from './types';
 
 export const drawLine = (
   ctx: CanvasRenderingContext2D,
-  start: Point,
-  end: Point
+  start: TPoint,
+  end: TPoint
 ) => {
   ctx.strokeStyle = '#aaaaaa';
 
@@ -13,7 +13,7 @@ export const drawLine = (
   ctx.stroke();
 };
 
-export const drawCricle = (ctx: CanvasRenderingContext2D, center: Point) => {
+export const drawCricle = (ctx: CanvasRenderingContext2D, center: TPoint) => {
   ctx.beginPath();
   ctx.arc(center.x, center.y, 10, 0, 2 * Math.PI);
   ctx.stroke();
