@@ -1,11 +1,12 @@
 import './style.css';
 import { hexCornerGet } from './hex/corner';
-import { drawLine } from './draw';
+import { drawCricle, drawLine } from './draw';
 import { Point, TField } from './types';
 import { fieldCreate } from './fields';
 import { hexNeighbor } from './hex/neighbor';
 import { hexCenterGet } from './hex/center';
 import { pixel2FlatHex } from './hex/pixel';
+import { hexGetId } from './hex/utils';
 
 const canvas = document.querySelector('#canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -70,7 +71,7 @@ export const drawAreaFieldLabel = (
 
   ctx.fillStyle = '#aa0099';
   ctx.font = '1em Arial';
-  ctx.fillText(field.id, hexCenter.x - 10, hexCenter.y + 5);
+  ctx.fillText(hexGetId(field.hex), hexCenter.x - 10, hexCenter.y + 5);
 };
 
 const areaDraw = () => {
@@ -92,17 +93,9 @@ areaInit();
 
 areaDraw();
 
-// ------
-
 const mouse: Point = {
   x: -1,
   y: -1,
-};
-
-const drawCricle = (center: Point) => {
-  ctx.beginPath();
-  ctx.arc(center.x, center.y, 10, 0, 2 * Math.PI);
-  ctx.stroke();
 };
 
 const draw = () => {
@@ -114,7 +107,7 @@ const draw = () => {
 
   if (mouse.x >= 0 && mouse.y >= 0) {
     const center: Point = { x: mouse.x, y: mouse.y };
-    drawCricle(center);
+    drawCricle(ctx, center);
     const coords = pixel2FlatHex(center, size, origin);
     console.log(coords);
   }

@@ -4,6 +4,5 @@ export type Point = {
 };
 
 export type TField = {
-  id: string;
   hex: Point;
 };
