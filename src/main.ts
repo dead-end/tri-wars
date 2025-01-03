@@ -1,10 +1,11 @@
 import { hexCornerGet } from './hex/corner';
-import { drawFieldLabel, drawLine } from './draw';
+import { drawLine } from './draw';
 import { Point, TField } from './types';
 import './style.css';
 import { fieldCreate } from './fields';
 import { hexNeighbor } from './hex/neighbor';
 import { hexCenterGet } from './hex/center';
+import { pixel2FlatHex } from './hex/pixel';
 
 const canvas = document.querySelector('#canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -200,6 +201,8 @@ areaInit();
 drawArea();
 */
 
+// ----------------
+
 const ROWS = 5;
 const COLS = 5;
 
@@ -268,3 +271,40 @@ const areaDraw = () => {
 areaInit();
 
 areaDraw();
+
+// ------
+
+const mouse: Point = {
+  x: -1,
+  y: -1,
+};
+
+const drawCricle = (center: Point) => {
+  ctx.beginPath();
+  ctx.arc(center.x, center.y, 10, 0, 2 * Math.PI);
+  ctx.stroke();
+};
+
+const draw = () => {
+  //??
+  ctx.globalCompositeOperation = 'destination-over';
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  areaDraw();
+
+  if (mouse.x >= 0 && mouse.y >= 0) {
+    const center: Point = { x: mouse.x, y: mouse.y };
+    drawCricle(center);
+    const coords = pixel2FlatHex(center, size, origin);
+    console.log(coords);
+  }
+
+  window.requestAnimationFrame(draw);
+};
+
+window.addEventListener('mousedown', (e) => {
+  mouse.x = e.x;
+  mouse.y = e.y;
+});
+
+draw();

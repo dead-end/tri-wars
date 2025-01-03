@@ -1,6 +1,5 @@
 import { Point } from '../types';
-
-const SQR_3 = Math.sqrt(3);
+import { SQR_3 } from '../utils';
 
 // TODO: not used and only corret for cube coords
 export const hexCenterGet = (
