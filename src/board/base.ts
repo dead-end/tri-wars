@@ -6,22 +6,12 @@ import { hexNeighbor } from '../hex/neighbor';
 import { hexGetId } from '../hex/utils';
 import { TField, TPoint } from '../types';
 
-const ROWS = 5;
-const COLS = 5;
+let rows = 5;
+let cols = 5;
 
 let board: TField[][] = [];
 
-export const boardInit = () => {
-  for (let c = 0; c < COLS; c++) {
-    board.push([]);
-  }
-};
-
-export const boardIsOn = (point: TPoint) => {
-  return point.x >= 0 && point.x < COLS && point.y >= 0 && point.y < ROWS;
-};
-
-const boardFieldDraw = (
+const fieldDraw = (
   ctx: CanvasRenderingContext2D,
   center: TPoint,
   field: TField,
@@ -36,12 +26,12 @@ const boardFieldDraw = (
     if (!hasNeighbor) {
       const start = hexCornerGet(hexCenter, i, size);
       const end = hexCornerGet(hexCenter, i + 1, size);
-      drawLine(ctx, start, end);
+      drawLine(ctx, start, end, '#aaaaaa');
     }
   }
 };
 
-export const drawAreaFieldLabel = (
+const fieldLabelDraw = (
   ctx: CanvasRenderingContext2D,
   center: TPoint,
   field: TField,
@@ -54,21 +44,30 @@ export const drawAreaFieldLabel = (
   ctx.fillText(hexGetId(field.hex), hexCenter.x - 10, hexCenter.y + 5);
 };
 
+export const boardInit = (iCols: number, iRows: number) => {
+  cols = iCols;
+  rows = iRows;
+  for (let c = 0; c < cols; c++) {
+    board.push([]);
+  }
+};
+
+export const boardIsOn = (point: TPoint) => {
+  return point.x >= 0 && point.x < cols && point.y >= 0 && point.y < rows;
+};
+
 export const boardDraw = (
   ctx: CanvasRenderingContext2D,
   origin: TPoint,
   size: number
 ) => {
-  for (let r = 0; r < ROWS; r++) {
-    for (let c = 0; c < COLS; c++) {
+  for (let c = 0; c < cols; c++) {
+    for (let r = 0; r < rows; r++) {
       const field: TField = fieldCreate({ x: c, y: r });
       board[c][r] = field;
 
-      // if ((c + 2) % 2) {
-      boardFieldDraw(ctx, origin, field, size);
-      //}
-
-      drawAreaFieldLabel(ctx, origin, field, size);
+      fieldDraw(ctx, origin, field, size);
+      fieldLabelDraw(ctx, origin, field, size);
     }
   }
 };

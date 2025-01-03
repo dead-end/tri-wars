@@ -22,7 +22,7 @@ const size = 40;
 
 const origin = { x: 100, y: 100 };
 
-boardInit();
+boardInit(10, 7);
 
 boardDraw(ctx, origin, size);
 
@@ -40,7 +40,7 @@ const draw = () => {
 
   if (mouse.x >= 0 && mouse.y >= 0) {
     const center: TPoint = { x: mouse.x, y: mouse.y };
-    drawCricle(ctx, center);
+    drawCricle(ctx, center, '#1dfe60');
     const coords = pixel2FlatHex(center, size, origin);
     console.log(coords);
   }
