@@ -1,4 +1,4 @@
-import { drawLine } from '../draw';
+import { drawFill, drawLine } from '../draw';
 import { fieldCreate } from '../fields';
 import { hexCenterGet } from '../hex/center';
 import { hexCornerGet } from '../hex/corner';
@@ -12,7 +12,7 @@ let cols = 5;
 let board: TField[][] = [];
 
 const fieldDraw = (
-  ctx: CanvasRenderingContext2D,
+  ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
   center: TPoint,
   field: TField,
   size: number
@@ -31,8 +31,24 @@ const fieldDraw = (
   }
 };
 
+export const fieldHighlight = (
+  ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
+  center: TPoint,
+  hex: TPoint,
+  size: number
+) => {
+  const hexCenter = hexCenterGet(center, hex, size);
+
+  const points: TPoint[] = [];
+  for (let i = 0; i < 6; i++) {
+    points.push(hexCornerGet(hexCenter, i, size));
+  }
+
+  drawFill(ctx, points, '#aaaaaa');
+};
+
 const fieldLabelDraw = (
-  ctx: CanvasRenderingContext2D,
+  ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
   center: TPoint,
   field: TField,
   size: number
@@ -57,7 +73,7 @@ export const boardIsOn = (point: TPoint) => {
 };
 
 export const boardDraw = (
-  ctx: CanvasRenderingContext2D,
+  ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
   origin: TPoint,
   size: number
 ) => {

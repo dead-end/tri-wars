@@ -2,13 +2,20 @@ import './style.css';
 import { drawCricle } from './draw';
 import { TPoint } from './types';
 import { pixel2FlatHex } from './hex/pixel';
-import { boardDraw, boardInit } from './board/base';
+import { boardDraw, boardInit, boardIsOn, fieldHighlight } from './board/base';
 
 const canvas = document.querySelector('#canvas') as HTMLCanvasElement;
-const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+const ctx = canvas.getContext('2d');
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
+const canvasOff = new OffscreenCanvas(1000, 1000);
+const ctxOff = canvasOff.getContext('2d');
+
+if (ctx == null || ctxOff == null) {
+  throw new Error('Unable to get context!');
+}
 
 /*
 ctx.fillStyle = '#ffffff';
@@ -24,7 +31,7 @@ const origin = { x: 100, y: 100 };
 
 boardInit(10, 7);
 
-boardDraw(ctx, origin, size);
+boardDraw(ctxOff, origin, size);
 
 const mouse: TPoint = {
   x: -1,
@@ -36,13 +43,26 @@ const draw = () => {
   ctx.globalCompositeOperation = 'destination-over';
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  boardDraw(ctx, origin, size);
+  ctx.drawImage(
+    canvasOff,
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
 
   if (mouse.x >= 0 && mouse.y >= 0) {
     const center: TPoint = { x: mouse.x, y: mouse.y };
-    drawCricle(ctx, center, '#1dfe60');
     const coords = pixel2FlatHex(center, size, origin);
-    console.log(coords);
+    // console.log(coords);
+
+    if (boardIsOn(coords)) {
+      fieldHighlight(ctx, origin, coords, size);
+    }
   }
 
   window.requestAnimationFrame(draw);
