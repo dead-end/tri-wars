@@ -4,7 +4,7 @@ import { hexCenterGet } from '../hex/center';
 import { hexCornerGet } from '../hex/corner';
 import { hexNeighbor } from '../hex/neighbor';
 import { hexGetId } from '../hex/utils';
-import { TField, TPoint } from '../types';
+import { TContext, TField, TPoint } from '../types';
 
 let rows = 5;
 let cols = 5;
@@ -12,7 +12,7 @@ let cols = 5;
 let board: TField[][] = [];
 
 const fieldDraw = (
-  ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
+  ctx: TContext,
   center: TPoint,
   field: TField,
   size: number
@@ -32,7 +32,7 @@ const fieldDraw = (
 };
 
 export const fieldHighlight = (
-  ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
+  ctx: TContext,
   center: TPoint,
   hex: TPoint,
   size: number
@@ -48,7 +48,7 @@ export const fieldHighlight = (
 };
 
 const fieldLabelDraw = (
-  ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
+  ctx: TContext,
   center: TPoint,
   field: TField,
   size: number
@@ -72,11 +72,7 @@ export const boardIsOn = (point: TPoint) => {
   return point.x >= 0 && point.x < cols && point.y >= 0 && point.y < rows;
 };
 
-export const boardDraw = (
-  ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
-  origin: TPoint,
-  size: number
-) => {
+export const boardDraw = (ctx: TContext, origin: TPoint, size: number) => {
   for (let c = 0; c < cols; c++) {
     for (let r = 0; r < rows; r++) {
       const field: TField = fieldCreate({ x: c, y: r });

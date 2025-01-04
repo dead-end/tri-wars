@@ -1,10 +1,10 @@
-import { TPoint } from './types';
+import { TContext, TPoint } from './types';
 
 /**
  * Base function that draws a line.
  */
 export const drawLine = (
-  ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
+  ctx: TContext,
   start: TPoint,
   end: TPoint,
   style: string
@@ -16,11 +16,7 @@ export const drawLine = (
   ctx.stroke();
 };
 
-export const drawFill = (
-  ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
-  points: TPoint[],
-  style: string
-) => {
+export const drawFill = (ctx: TContext, points: TPoint[], style: string) => {
   ctx.fillStyle = style;
   ctx.beginPath();
   ctx.moveTo(points[0].x, points[0].y);
@@ -35,11 +31,8 @@ export const drawFill = (
 /**
  * Base function that draws a circle.
  */
-export const drawCricle = (
-  ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
-  center: TPoint,
-  style: string
-) => {
+// TODO: not used
+export const drawCricle = (ctx: TContext, center: TPoint, style: string) => {
   ctx.strokeStyle = style;
   ctx.beginPath();
   ctx.arc(center.x, center.y, 10, 0, 2 * Math.PI);

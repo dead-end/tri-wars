@@ -6,3 +6,7 @@ export type TPoint = {
 export type TField = {
   hex: TPoint;
 };
+
+export type TContext =
+  | CanvasRenderingContext2D
+  | OffscreenCanvasRenderingContext2D;

@@ -1,5 +1,4 @@
 import './style.css';
-import { drawCricle } from './draw';
 import { TPoint } from './types';
 import { pixel2FlatHex } from './hex/pixel';
 import { boardDraw, boardInit, boardIsOn, fieldHighlight } from './board/base';
