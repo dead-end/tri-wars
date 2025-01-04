@@ -1,6 +1,6 @@
 import './style.css';
 import { TPoint } from './types';
-import { pixel2FlatHex } from './hex/pixel';
+import { pixel2Hex } from './hex/pixel2hex';
 import {
   boardDraw,
   boardInit,
@@ -61,7 +61,7 @@ const draw = () => {
 
   if (mouse.x >= 0 && mouse.y >= 0) {
     const center: TPoint = { x: mouse.x, y: mouse.y };
-    const coords = pixel2FlatHex(center, size, origin);
+    const coords = pixel2Hex(center, size, origin);
     // console.log(coords);
 
     if (boardIsOn(coords)) {

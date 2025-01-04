@@ -75,7 +75,7 @@ const axialRound = (axial: TPoint) => {
  *
  * See: https://www.redblobgames.com/grids/hexagons/
  */
-export const pixel2FlatHex = (point: TPoint, size: number, origin: TPoint) => {
+export const pixel2Hex = (point: TPoint, size: number, origin: TPoint) => {
   point.x -= origin.x;
   point.y -= origin.y;
 
