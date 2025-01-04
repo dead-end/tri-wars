@@ -1,4 +1,4 @@
-import { drawFill, drawLine } from '../draw/draw';
+import { drawFill, drawLine } from '../draw/base';
 import { fieldCreate } from '../fields';
 import { hexCenterGet } from '../hex/center';
 import { hexCornerGet } from '../hex/corner';
