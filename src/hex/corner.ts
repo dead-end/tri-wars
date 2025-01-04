@@ -23,14 +23,14 @@ const init = () => {
 
 const corners: TPoint[] = init();
 
-export const hexCornerGet = (
-  center: TPoint,
-  i: number,
-  size: number
-): TPoint => {
+/**
+ * The function retuns the coordiantes of a corner of a hexagon.
+ */
+export const hexCornerGet = (center: TPoint, i: number, size: number) => {
   const idx = mod(i, 6);
-  return {
+  const result: TPoint = {
     x: center.x + size * corners[idx].x,
     y: center.y + size * corners[idx].y,
   };
+  return result;
 };

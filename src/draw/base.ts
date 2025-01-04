@@ -1,4 +1,4 @@
-import { TContext, TPoint } from './types';
+import { TContext, TPoint } from '../types';
 
 /**
  * Base function that draws a line.
@@ -16,6 +16,9 @@ export const drawLine = (
   ctx.stroke();
 };
 
+/**
+ * Base function that draws a polygon.
+ */
 export const drawFill = (ctx: TContext, points: TPoint[], style: string) => {
   ctx.fillStyle = style;
   ctx.beginPath();

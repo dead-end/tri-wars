@@ -1,4 +1,4 @@
-import { drawFill, drawLine } from '../draw';
+import { drawFill, drawLine } from '../draw/draw';
 import { fieldCreate } from '../fields';
 import { hexCenterGet } from '../hex/center';
 import { hexCornerGet } from '../hex/corner';
@@ -29,22 +29,6 @@ const fieldDraw = (
       drawLine(ctx, start, end, '#aaaaaa');
     }
   }
-};
-
-export const fieldHighlight = (
-  ctx: TContext,
-  center: TPoint,
-  hex: TPoint,
-  size: number
-) => {
-  const hexCenter = hexCenterGet(center, hex, size);
-
-  const points: TPoint[] = [];
-  for (let i = 0; i < 6; i++) {
-    points.push(hexCornerGet(hexCenter, i, size));
-  }
-
-  drawFill(ctx, points, '#aaaaaa');
 };
 
 const fieldLabelDraw = (
@@ -82,4 +66,20 @@ export const boardDraw = (ctx: TContext, origin: TPoint, size: number) => {
       fieldLabelDraw(ctx, origin, field, size);
     }
   }
+};
+
+export const boardHighlightField = (
+  ctx: TContext,
+  center: TPoint,
+  hex: TPoint,
+  size: number
+) => {
+  const hexCenter = hexCenterGet(center, hex, size);
+
+  const points: TPoint[] = [];
+  for (let i = 0; i < 6; i++) {
+    points.push(hexCornerGet(hexCenter, i, size));
+  }
+
+  drawFill(ctx, points, '#aaaaaa');
 };

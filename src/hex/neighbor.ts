@@ -22,10 +22,14 @@ const NEIGHBOR_ODD: TPoint[] = [
 
 const HEX_NEIGHBOR: TPoint[][] = [NEIGHBOR_EVEN, NEIGHBOR_ODD];
 
-export const hexNeighbor = (point: TPoint, i: number): TPoint => {
-  const neighbor = HEX_NEIGHBOR[mod(point.x, 2)][mod(i, 6)];
-  return {
-    x: point.x + neighbor.x,
-    y: point.y + neighbor.y,
+/**
+ * The function returns the neibhbor of a hexagon in a given direction.
+ */
+export const hexNeighbor = (hex: TPoint, i: number) => {
+  const neighbor = HEX_NEIGHBOR[mod(hex.x, 2)][mod(i, 6)];
+  const result: TPoint = {
+    x: hex.x + neighbor.x,
+    y: hex.y + neighbor.y,
   };
+  return result;
 };

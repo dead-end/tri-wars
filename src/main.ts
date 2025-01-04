@@ -1,7 +1,12 @@
 import './style.css';
 import { TPoint } from './types';
 import { pixel2FlatHex } from './hex/pixel';
-import { boardDraw, boardInit, boardIsOn, fieldHighlight } from './board/base';
+import {
+  boardDraw,
+  boardInit,
+  boardIsOn,
+  boardHighlightField,
+} from './board/base';
 
 const canvas = document.querySelector('#canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d');
@@ -60,7 +65,7 @@ const draw = () => {
     // console.log(coords);
 
     if (boardIsOn(coords)) {
-      fieldHighlight(ctx, origin, coords, size);
+      boardHighlightField(ctx, origin, coords, size);
     }
   }
 
