@@ -10,3 +10,11 @@ export type TField = {
 export type TContext =
   | CanvasRenderingContext2D
   | OffscreenCanvasRenderingContext2D;
+
+export type TSizes = {
+  size: number;
+  width: number;
+  height: number;
+  vSpace: number;
+  hSpace: number;
+};
