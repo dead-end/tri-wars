@@ -1,5 +1,6 @@
 import { TPoint } from '../types';
-import { SQR_3 } from '../utils';
+
+const SQR_3 = Math.sqrt(3);
 
 /**
  * Cube coordinates of a hex point.
