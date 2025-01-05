@@ -10,14 +10,14 @@ import {
 import { boardSizeGet } from './board/size';
 import { hexSizesUpdate } from './hex/sizes';
 import { hexCornerUpdate } from './hex/corner';
-import { hexGetOrigin } from './hex/center';
+import { hexOriginGet } from './hex/center';
 
 const hexSize = 40;
 const hexNum: TPoint = { x: 20, y: 20 };
 
 const hexSizes = hexSizesUpdate(hexSize);
 hexCornerUpdate(hexSizes);
-const origin = hexGetOrigin(hexSizes);
+const origin = hexOriginGet(hexSizes);
 const boardSize = boardSizeGet(hexNum, hexSizes);
 
 const canvas = document.querySelector('#canvas') as HTMLCanvasElement;
@@ -115,8 +115,11 @@ const draw = () => {
 
   if (mouse.x >= 0 && mouse.y >= 0) {
     const center: TPoint = { x: mouse.x, y: mouse.y };
-    const coords = pixel2Hex(center, hexSizes.size, origin);
-    // console.log(coords);
+    const offOigin = {
+      x: origin.x - offset.x,
+      y: origin.y - offset.y,
+    };
+    const coords = pixel2Hex(center, hexSizes.size, offOigin);
 
     if (boardIsOn(coords)) {
       const originOffset: TPoint = {
