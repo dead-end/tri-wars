@@ -1,7 +1,7 @@
-import { TSizes } from '../types';
+import { THexSizes } from '../types';
 
 export const hexSizesUpdate = (size: number) => {
-  const result: TSizes = {
+  const result: THexSizes = {
     size,
     vSpace: Math.sqrt(3) * size,
     hSpace: (3 / 2) * size,

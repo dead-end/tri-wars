@@ -1,34 +1,34 @@
-import { TSizes, TPoint } from '../types';
+import { THexSizes, TPoint } from '../types';
 import { mod } from '../utils';
 
 let corners: TPoint[];
 
-export const hexCornerUpdate = (sizes: TSizes) => {
+export const hexCornerUpdate = (hexSizes: THexSizes) => {
   const result: TPoint[] = [];
 
   result.push(
     {
-      x: -sizes.width / 4,
-      y: -sizes.height / 2,
+      x: -hexSizes.width / 4,
+      y: -hexSizes.height / 2,
     },
     {
-      x: +sizes.width / 4,
-      y: -sizes.height / 2,
+      x: +hexSizes.width / 4,
+      y: -hexSizes.height / 2,
     },
     {
-      x: +sizes.width / 2,
+      x: +hexSizes.width / 2,
       y: 0,
     },
     {
-      x: +sizes.width / 4,
-      y: +sizes.height / 2,
+      x: +hexSizes.width / 4,
+      y: +hexSizes.height / 2,
     },
     {
-      x: -sizes.width / 4,
-      y: +sizes.height / 2,
+      x: -hexSizes.width / 4,
+      y: +hexSizes.height / 2,
     },
     {
-      x: -sizes.width / 2,
+      x: -hexSizes.width / 2,
       y: 0,
     }
   );

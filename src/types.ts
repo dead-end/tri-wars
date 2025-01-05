@@ -11,7 +11,7 @@ export type TContext =
   | CanvasRenderingContext2D
   | OffscreenCanvasRenderingContext2D;
 
-export type TSizes = {
+export type THexSizes = {
   size: number;
   width: number;
   height: number;
