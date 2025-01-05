@@ -8,6 +8,5 @@ export const boardSizeGet = (hexNum: TPoint, hexSizes: THexSizes) => {
     x: Math.ceil(x),
     y: Math.ceil(y),
   };
-  console.log('num', hexNum, 'sizes', hexSizes, 'result', result);
   return result;
 };
