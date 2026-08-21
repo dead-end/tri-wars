@@ -3,6 +3,11 @@ import { mod } from '../utils';
 
 let corners: TPoint[];
 
+/**
+ * The corners of a hex with the center of the hex in (0, 0) depend only on
+ * the width and height of the hex. This can be precomputed when the size
+ * changes.
+ */
 export const hexCornerUpdate = (hexSizes: THexSizes) => {
   const result: TPoint[] = [];
 
@@ -30,12 +35,16 @@ export const hexCornerUpdate = (hexSizes: THexSizes) => {
     {
       x: -hexSizes.width / 2,
       y: 0,
-    }
+    },
   );
 
   corners = result;
 };
 
+/**
+ * The function is called with the center of a hex and we only have to add the
+ * precomputed corner offset.
+ */
 export const hexCornerGet = (center: TPoint, i: number) => {
   const idx = mod(i, 6);
   const result: TPoint = {

@@ -12,7 +12,10 @@ import { hexSizesUpdate } from './hex/sizes';
 import { hexCornerUpdate } from './hex/corner';
 import { hexOriginGet } from './hex/center';
 
+// outer circle radius
 const hexSize = 40;
+
+// Number of hex on the board
 const hexNum: TPoint = { x: 20, y: 20 };
 
 const hexSizes = hexSizesUpdate(hexSize);
@@ -41,6 +44,8 @@ ctx.fillText('hello world', 50, 50);
 
 // ----------------
 
+// If the board is greater than the canvas, then the origin can be pushed to
+// the left and to the top. This can be achieved with the arrow keys.
 const offset: TPoint = {
   x: 0,
   y: 0,
@@ -57,12 +62,12 @@ const mouse: TPoint = {
   y: -1,
 };
 
-const offsetSpeed = 10;
+const offsetSpeed = 20;
 
 console.log('w', canvas.width, 'h', canvas.height, 'off', offset);
 
 const boardUpdateOffset = (key: string) => {
-  console.log(key, offset);
+  console.log('key', key, 'offset', offset);
   switch (key) {
     case 'ArrowLeft':
       offset.x -= offsetSpeed;
@@ -110,7 +115,7 @@ const draw = () => {
     0,
     0,
     canvas.width,
-    canvas.height
+    canvas.height,
   );
 
   if (mouse.x >= 0 && mouse.y >= 0) {
@@ -128,6 +133,9 @@ const draw = () => {
       };
       boardHighlightField(ctx, originOffset, coords, hexSizes);
     }
+
+    //mouse.x = -1;
+    //mouse.y = -1;
   }
 
   window.requestAnimationFrame(draw);
