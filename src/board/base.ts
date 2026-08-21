@@ -6,18 +6,18 @@ import { hexNeighbor } from '../hex/neighbor';
 import { hexGetId } from '../hex/utils';
 import { TContext, TField, THexSizes, TPoint } from '../types';
 
-let rows = 5;
-let cols = 5;
+let rows = 0;
+let cols = 0;
 
 let board: TField[][] = [];
 
 const fieldDraw = (
   ctx: TContext,
-  center: TPoint,
+  origin: TPoint,
   field: TField,
-  hexSizes: THexSizes
+  hexSizes: THexSizes,
 ) => {
-  const hexCenter = hexCenterGet(center, field.hex, hexSizes);
+  const hexCenter = hexCenterGet(origin, field.hex, hexSizes);
 
   for (let i = 0; i < 6; i++) {
     const hex = hexNeighbor(field.hex, i);
@@ -28,18 +28,18 @@ const fieldDraw = (
       const end = hexCornerGet(hexCenter, i + 1);
       drawLine(ctx, start, end, '#aaaaaa');
 
-      console.log('start', start);
+      //console.log('start', start);
     }
   }
 };
 
 const fieldLabelDraw = (
   ctx: TContext,
-  center: TPoint,
+  origin: TPoint,
   field: TField,
-  hexSizes: THexSizes
+  hexSizes: THexSizes,
 ) => {
-  const hexCenter = hexCenterGet(center, field.hex, hexSizes);
+  const hexCenter = hexCenterGet(origin, field.hex, hexSizes);
 
   const text = `${Math.round(hexCenter.x)}:${Math.round(hexCenter.y)}`;
 
@@ -57,14 +57,19 @@ export const boardInit = (iCols: number, iRows: number) => {
   }
 };
 
-export const boardIsOn = (point: TPoint) => {
-  return point.x >= 0 && point.x < cols && point.y >= 0 && point.y < rows;
+/**
+ * The function checks if a hex/field is on the board. For example, when we
+ * compute neighbors for a hex at the edge of the board, then a potential
+ * neighbor may be outside.
+ */
+export const boardIsOn = (hex: TPoint) => {
+  return hex.x >= 0 && hex.x < cols && hex.y >= 0 && hex.y < rows;
 };
 
 export const boardDraw = (
   ctx: TContext,
   origin: TPoint,
-  hexSizes: THexSizes
+  hexSizes: THexSizes,
 ) => {
   for (let c = 0; c < cols; c++) {
     for (let r = 0; r < rows; r++) {
@@ -81,7 +86,7 @@ export const boardHighlightField = (
   ctx: TContext,
   center: TPoint,
   hex: TPoint,
-  hexSizes: THexSizes
+  hexSizes: THexSizes,
 ) => {
   const hexCenter = hexCenterGet(center, hex, hexSizes);
 
