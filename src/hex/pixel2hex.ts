@@ -70,7 +70,7 @@ const axialRound = (axial: TPoint) => {
 };
 
 /**
- * The functiom computes for a given point on the canvas, which hex it is
+ * The function computes for a given point on the canvas, which hex it is
  * pointing to. The origin is the center of the (0, 0) hexagon and size is
  * the size of the hexagon.
  *

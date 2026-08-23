@@ -11,7 +11,8 @@ import { THexSizes } from '../types';
  *
  * width: The size from the left corner to the right corner.
  *
- * height: The size from the top to the bottom edge of the hex.
+ * height: The size from the top to the bottom edge of the hex. This is also
+ * the inner radius.
  */
 export const hexSizesUpdate = (size: number) => {
   const result: THexSizes = {
@@ -21,6 +22,8 @@ export const hexSizesUpdate = (size: number) => {
     width: 2 * size,
     height: Math.sqrt(3) * size,
   };
+
+  console.log('sizes', JSON.stringify(result));
 
   return result;
 };

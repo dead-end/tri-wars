@@ -3,8 +3,13 @@ export type TPoint = {
   y: number;
 };
 
+export enum EMarker {
+  HIGHLIGHT,
+}
+
 export type TField = {
   hex: TPoint;
+  markers: EMarker[];
 };
 
 export type TContext =

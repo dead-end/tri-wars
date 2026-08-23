@@ -1,11 +1,13 @@
 import './style.css';
-import { TPoint } from './types';
+import { EMarker, TPoint } from './types';
 import { pixel2Hex } from './hex/pixel2hex';
 import {
   boardDraw,
   boardInit,
   boardIsOn,
-  boardHighlightField,
+  boardRemoveAllMarker,
+  boardAddMarker,
+  boardHighlightFields,
 } from './board/base';
 import { boardSizeGet } from './board/size';
 import { hexSizesUpdate } from './hex/sizes';
@@ -118,25 +120,25 @@ const draw = () => {
     canvas.height,
   );
 
-  if (mouse.x >= 0 && mouse.y >= 0) {
-    const center: TPoint = { x: mouse.x, y: mouse.y };
-    const offOigin = {
-      x: origin.x - offset.x,
-      y: origin.y - offset.y,
-    };
-    const coords = pixel2Hex(center, hexSizes.size, offOigin);
+  const originOffset: TPoint = {
+    x: origin.x - offset.x,
+    y: origin.y - offset.y,
+  };
 
-    if (boardIsOn(coords)) {
-      const originOffset: TPoint = {
-        x: origin.x - offset.x,
-        y: origin.y - offset.y,
-      };
-      boardHighlightField(ctx, originOffset, coords, hexSizes);
+  if (mouse.x >= 0 && mouse.y >= 0) {
+    const pixel: TPoint = { x: mouse.x, y: mouse.y };
+    const hex = pixel2Hex(pixel, hexSizes.size, originOffset);
+
+    if (boardIsOn(hex)) {
+      boardRemoveAllMarker(EMarker.HIGHLIGHT);
+      boardAddMarker(hex, EMarker.HIGHLIGHT);
     }
 
-    //mouse.x = -1;
-    //mouse.y = -1;
+    mouse.x = -1;
+    mouse.y = -1;
   }
+
+  boardHighlightFields(ctx, originOffset, hexSizes);
 
   window.requestAnimationFrame(draw);
 };

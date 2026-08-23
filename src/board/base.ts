@@ -4,7 +4,7 @@ import { hexCenterGet } from '../hex/center';
 import { hexCornerGet } from '../hex/corner';
 import { hexNeighbor } from '../hex/neighbor';
 import { hexGetId } from '../hex/utils';
-import { TContext, TField, THexSizes, TPoint } from '../types';
+import { EMarker, TContext, TField, THexSizes, TPoint } from '../types';
 
 let rows = 0;
 let cols = 0;
@@ -84,11 +84,11 @@ export const boardDraw = (
 
 export const boardHighlightField = (
   ctx: TContext,
-  center: TPoint,
+  origin: TPoint,
   hex: TPoint,
   hexSizes: THexSizes,
 ) => {
-  const hexCenter = hexCenterGet(center, hex, hexSizes);
+  const hexCenter = hexCenterGet(origin, hex, hexSizes);
 
   const points: TPoint[] = [];
   for (let i = 0; i < 6; i++) {
@@ -96,4 +96,46 @@ export const boardHighlightField = (
   }
 
   drawFill(ctx, points, '#aaaaaa');
+};
+
+export const boardHighlightFields = (
+  ctx: TContext,
+  origin: TPoint,
+  hexSizes: THexSizes,
+) => {
+  for (let c = 0; c < cols; c++) {
+    for (let r = 0; r < rows; r++) {
+      const hex = { x: r, y: c };
+      if (boardHasMarker(hex, EMarker.HIGHLIGHT)) {
+        boardHighlightField(ctx, origin, hex, hexSizes);
+      }
+    }
+  }
+};
+
+const boardHasMarker = (hex: TPoint, marker: EMarker) => {
+  return board[hex.x][hex.y].markers.includes(marker);
+};
+
+export const boardAddMarker = (hex: TPoint, marker: EMarker) => {
+  if (boardHasMarker(hex, marker)) {
+    return;
+  }
+  board[hex.x][hex.y].markers.push(marker);
+};
+
+const boardRemoveMarker = (hex: TPoint, marker: EMarker) => {
+  if (!boardHasMarker(hex, marker)) {
+    return;
+  }
+  const field = board[hex.x][hex.y];
+  field.markers = field.markers.filter((m) => m !== marker);
+};
+
+export const boardRemoveAllMarker = (marker: EMarker) => {
+  for (let c = 0; c < cols; c++) {
+    for (let r = 0; r < rows; r++) {
+      boardRemoveMarker({ x: r, y: c }, marker);
+    }
+  }
 };
