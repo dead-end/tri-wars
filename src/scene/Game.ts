@@ -1,3 +1,4 @@
+import { createCanvas } from './canvas';
 import { SceneManager } from './SceneManager';
 
 export class Game {
@@ -7,17 +8,7 @@ export class Game {
   private isRunning: boolean = false;
 
   constructor(canvasId: string, sceneManager: SceneManager) {
-    const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
-    const context = canvas.getContext('2d');
-
-    if (!context) {
-      throw new Error('2D Context konnte nicht geladen werden.');
-    }
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    this.ctx = context;
+    this.ctx = createCanvas(canvasId, window.innerWidth, window.innerHeight);
 
     this.sceneManager = sceneManager;
 
