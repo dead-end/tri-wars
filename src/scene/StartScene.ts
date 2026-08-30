@@ -40,7 +40,7 @@ export class StartScene implements IScene {
 
   private keydown = (e: KeyboardEvent) => {
     if (e.key === ' ') {
-      this.sceneManager.changeTo('GameScene');
+      this.sceneManager.changeTo('SpaceScene');
     }
   };
 }

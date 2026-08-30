@@ -8,9 +8,9 @@ export class Game {
   private isRunning: boolean = false;
 
   constructor(canvasId: string, sceneManager: SceneManager) {
-    this.ctx = createCanvas(canvasId, window.innerWidth, window.innerHeight);
-
     this.sceneManager = sceneManager;
+
+    this.ctx = createCanvas(canvasId, window.innerWidth, window.innerHeight);
 
     document.addEventListener('keydown', this.keydown);
   }
@@ -26,7 +26,7 @@ export class Game {
     this.isRunning = true;
 
     // prise time in milliseconds
-    this.lastTime = performance.now(); // Präzise Zeit in Millisekunden
+    this.lastTime = performance.now();
 
     // starting the main loop
     requestAnimationFrame((timestamp) => this.loop(timestamp));
