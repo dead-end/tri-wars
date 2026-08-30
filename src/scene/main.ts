@@ -1,5 +1,6 @@
 import { Game } from './Game';
 import { SceneManager } from './SceneManager';
+import { SpaceScene } from './SpaceScene';
 import { StartScene } from './StartScene';
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -8,9 +9,8 @@ window.addEventListener('DOMContentLoaded', () => {
   /**
    * create and register scenes.
    */
-  const gameScene = new StartScene(sceneManager);
-
-  sceneManager.add(gameScene);
+  sceneManager.add(new StartScene(sceneManager));
+  sceneManager.add(new SpaceScene(sceneManager));
 
   /**
    * Set the initial scene.
