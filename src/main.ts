@@ -67,7 +67,7 @@ const offsetSpeed = 20;
 
 boardInit(hexNum.x, hexNum.x);
 
-boardDraw(ctxOff, origin, hexSizes);
+//boardDraw(ctxOff, origin, hexSizes);
 
 // console.log('w', canvas.width, 'h', canvas.height, 'off', offset);
 
@@ -143,7 +143,7 @@ const draw = () => {
     ctx.canvas.height,
   );
 
-  boardHighlightFields(ctx, originOffset, hexSizes);
+  //boardHighlightFields(ctx, originOffset, hexSizes);
 
   window.requestAnimationFrame(draw);
 };
