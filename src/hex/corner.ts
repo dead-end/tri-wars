@@ -1,4 +1,5 @@
-import { THexSizes, TPoint } from '../types';
+import { Transform } from '../scene/Transform';
+import { TPoint } from '../types';
 import { mod } from '../utils';
 
 let corners: TPoint[];
@@ -8,32 +9,32 @@ let corners: TPoint[];
  * the width and height of the hex. This can be precomputed when the size
  * changes.
  */
-export const hexCornerUpdate = (hexSizes: THexSizes) => {
+export const hexCornerUpdate = (transform: Transform) => {
   const result: TPoint[] = [];
 
   result.push(
     {
-      x: -hexSizes.width / 4,
-      y: -hexSizes.height / 2,
+      x: -transform.width / 4,
+      y: -transform.height / 2,
     },
     {
-      x: +hexSizes.width / 4,
-      y: -hexSizes.height / 2,
+      x: +transform.width / 4,
+      y: -transform.height / 2,
     },
     {
-      x: +hexSizes.width / 2,
+      x: +transform.width / 2,
       y: 0,
     },
     {
-      x: +hexSizes.width / 4,
-      y: +hexSizes.height / 2,
+      x: +transform.width / 4,
+      y: +transform.height / 2,
     },
     {
-      x: -hexSizes.width / 4,
-      y: +hexSizes.height / 2,
+      x: -transform.width / 4,
+      y: +transform.height / 2,
     },
     {
-      x: -hexSizes.width / 2,
+      x: -transform.width / 2,
       y: 0,
     },
   );

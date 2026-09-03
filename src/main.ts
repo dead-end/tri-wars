@@ -37,7 +37,7 @@ const ctx = createCanvas('canvas', window.innerWidth, window.innerHeight);
 const hexNum: TPoint = { x: 20, y: 20 };
 
 const hexSizes = hexSizesUpdate(40);
-hexCornerUpdate(hexSizes);
+//hexCornerUpdate(hexSizes);
 const origin = hexOriginGet(hexSizes);
 const boardSize = boardSizeGet(hexNum, hexSizes);
 
