@@ -4,7 +4,7 @@ export class Transform {
   //
   // The outer radius of the hex.
   //
-  private size: number;
+  size: number;
 
   //
   // The distance between the centers of two vertical hexagons, which means two
@@ -30,7 +30,13 @@ export class Transform {
   height: number;
 
   //
-  // The center of the upper left hex.
+  // All hex fields a computed relative to the center of the top left hex field.
+  // The origin it the position of the center top left hex field.
+  //
+  // The origin is computed, in a way that the top edge and the left corner are
+  // on the x- and y-axis.
+  //
+  // The origin depends on the hex size and it is not just the size.
   //
   origin: TPoint;
 
@@ -65,6 +71,15 @@ export class Transform {
 
     this.height = Math.sqrt(3) * size;
 
+    /**
+     * All hex fields a computed relative to the center of the top left hex field.
+     * The origin it the position of the center top left hex field.
+     *
+     * The origin is computed, in a way that the top edge and the left corner are
+     * on the x- and y-axis.
+     *
+     * The origin depends on the hex size and it is not just the size.
+     */
     this.origin = {
       x: this.width / 2,
       y: this.height / 2,
@@ -109,4 +124,16 @@ export class Transform {
       y: this.origin.y - this.offset.y,
     } as TPoint;
   }
+
+  /**
+   * The function computes the center of a hexagon on the board, based on the
+   * coordinates of the origin on the canvas.
+   */
+  public hexCenterGet = (origin: TPoint, hex: TPoint) => {
+    const result: TPoint = {
+      x: origin.x + hex.x * this.hSpace,
+      y: origin.y + hex.y * this.vSpace + ((hex.x % 2) * this.vSpace) / 2,
+    };
+    return result;
+  };
 }

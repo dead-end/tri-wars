@@ -8,8 +8,7 @@ import {
 } from '../board/base';
 import { hexCornerUpdate } from '../hex/corner';
 import { pixel2Hex } from '../hex/pixel2hex';
-import { hexSizesUpdate } from '../hex/sizes';
-import { EMarker, THexSizes, TPoint } from '../types';
+import { EMarker, TPoint } from '../types';
 import { createCanvas, createOffscreenCanvas } from './canvas';
 import { IScene } from './IScene';
 import { SceneManager } from './SceneManager';
@@ -19,7 +18,7 @@ export class SpaceScene implements IScene {
   public name = 'SpaceScene';
 
   private ctx: CanvasRenderingContext2D;
-  private hexSizes: THexSizes;
+
   private ctxOff: OffscreenCanvasRenderingContext2D;
 
   private offsetSpeed: number = 20;
@@ -38,7 +37,6 @@ export class SpaceScene implements IScene {
       { x: this.ctx.canvas.width, y: this.ctx.canvas.height },
     );
 
-    this.hexSizes = hexSizesUpdate(40);
     hexCornerUpdate(this.transform);
 
     this.ctxOff = createOffscreenCanvas(
@@ -48,7 +46,7 @@ export class SpaceScene implements IScene {
 
     boardInit(this.transform.hexNum.x, this.transform.hexNum.x);
 
-    boardDraw(this.ctxOff, this.transform.origin, this.hexSizes);
+    boardDraw(this.ctxOff, this.transform);
   }
 
   public create(): void {
@@ -88,7 +86,7 @@ export class SpaceScene implements IScene {
       const pixel: TPoint = { x: this.mouse.x, y: this.mouse.y };
       const hex = pixel2Hex(
         pixel,
-        this.hexSizes.size,
+        this.transform.size,
         this.transform.getOriginOffset(),
       );
 
@@ -117,7 +115,7 @@ export class SpaceScene implements IScene {
       ctx.canvas.height,
     );
 
-    boardHighlightFields(ctx, this.transform.getOriginOffset(), this.hexSizes);
+    boardHighlightFields(ctx, this.transform);
   }
 
   private keydown = (e: KeyboardEvent) => {

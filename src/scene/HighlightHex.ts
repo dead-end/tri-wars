@@ -3,6 +3,7 @@ import { hexCenterGet } from '../hex/center';
 import { hexCornerGet } from '../hex/corner';
 import { THexSizes, TPoint } from '../types';
 
+// TODO: not used
 export class HighlightHex {
   private offscreen: OffscreenCanvas;
 
