@@ -9,26 +9,30 @@ import {
 import { hexCornerUpdate } from '../hex/corner';
 import { pixel2Hex } from '../hex/pixel2hex';
 import { EMarker, TPoint } from '../types';
+import { Background } from './Background';
 import { createCanvas, createOffscreenCanvas } from './canvas';
+import { IObject } from './IObject';
 import { IScene } from './IScene';
 import { SceneManager } from './SceneManager';
 import { Transform } from './Transform';
 
 export class SpaceScene implements IScene {
-  public name = 'SpaceScene';
+  name = 'SpaceScene';
 
-  private ctx: CanvasRenderingContext2D;
+  sceneManager: SceneManager;
+  ctx: CanvasRenderingContext2D;
 
-  private ctxOff: OffscreenCanvasRenderingContext2D;
+  offsetSpeed: number = 20;
+  lastKey: string | undefined = undefined;
 
-  private offsetSpeed: number = 20;
-  private lastKey: string | undefined = undefined;
+  mouse: TPoint = { x: -1, y: -1 };
 
-  private mouse: TPoint = { x: -1, y: -1 };
+  transform: Transform;
 
-  private transform: Transform;
+  objects: IObject[] = [];
 
-  constructor(private sceneManager: SceneManager) {
+  constructor(sceneManager: SceneManager) {
+    this.sceneManager = sceneManager;
     this.ctx = createCanvas('canvas', window.innerWidth, window.innerHeight);
 
     this.transform = new Transform(
@@ -39,14 +43,7 @@ export class SpaceScene implements IScene {
 
     hexCornerUpdate(this.transform);
 
-    this.ctxOff = createOffscreenCanvas(
-      this.transform.boardSize.x,
-      this.transform.boardSize.y,
-    );
-
-    boardInit(this.transform.hexNum.x, this.transform.hexNum.x);
-
-    boardDraw(this.ctxOff, this.transform);
+    this.objects.push(new Background(this.transform));
   }
 
   public create(): void {
@@ -98,22 +95,16 @@ export class SpaceScene implements IScene {
       this.mouse.x = -1;
       this.mouse.y = -1;
     }
+
+    for (const obj of this.objects) {
+      obj.update(deltaTime);
+    }
   }
 
   public render(ctx: CanvasRenderingContext2D): void {
-    // TODO: This should be part of draw board
-    // ctxOff should be part of draw board.
-    ctx.drawImage(
-      this.ctxOff.canvas,
-      this.transform.offset.x,
-      this.transform.offset.y,
-      ctx.canvas.width,
-      ctx.canvas.height,
-      0,
-      0,
-      ctx.canvas.width,
-      ctx.canvas.height,
-    );
+    for (const obj of this.objects) {
+      obj.render(ctx);
+    }
 
     boardHighlightFields(ctx, this.transform);
   }
