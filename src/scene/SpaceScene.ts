@@ -1,8 +1,6 @@
 import {
   boardAddMarker,
-  boardDraw,
   boardHighlightFields,
-  boardInit,
   boardIsOn,
   boardRemoveAllMarker,
 } from '../board/base';
@@ -10,7 +8,7 @@ import { hexCornerUpdate } from '../hex/corner';
 import { pixel2Hex } from '../hex/pixel2hex';
 import { EMarker, TPoint } from '../types';
 import { Background } from './Background';
-import { createCanvas, createOffscreenCanvas } from './canvas';
+import { createCanvas } from './canvas';
 import { IObject } from './IObject';
 import { IScene } from './IScene';
 import { SceneManager } from './SceneManager';
@@ -37,7 +35,7 @@ export class SpaceScene implements IScene {
 
     this.transform = new Transform(
       40,
-      { x: 20, y: 20 },
+      { x: 20, y: 10 },
       { x: this.ctx.canvas.width, y: this.ctx.canvas.height },
     );
 
