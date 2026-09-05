@@ -41,7 +41,7 @@ export class Background implements IObject {
     this.drawStars(this.ctxOff, stars);
 
     // TODO: wrong place
-    boardInit(this.transform.hexNum.x, this.transform.hexNum.x);
+    boardInit(this.transform.hexNum.x, this.transform.hexNum.y);
 
     // TODO: the drawing should be here. The rest needs an other place.
     boardDraw(this.ctxOff, this.transform);
