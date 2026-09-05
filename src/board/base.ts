@@ -6,8 +6,8 @@ import { hexGetId } from '../hex/utils';
 import { Transform } from '../scene/Transform';
 import { EMarker, TContext, TField, TPoint } from '../types';
 
-let rows = 0;
-let cols = 0;
+let numX = 0;
+let numY = 0;
 
 let board: TField[][] = [];
 
@@ -37,10 +37,13 @@ const fieldLabelDraw = (ctx: TContext, transform: Transform, field: TField) => {
   ctx.fillText(text, hexCenter.x - 10, hexCenter.y + 15);
 };
 
-export const boardInit = (iCols: number, iRows: number) => {
-  cols = iCols;
-  rows = iRows;
-  for (let c = 0; c < cols; c++) {
+export const boardInit = (bx: number, by: number) => {
+  numX = bx;
+  numY = by;
+
+  console.log('r', numX, 'c', numY);
+
+  for (let x = 0; x < numX; x++) {
     board.push([]);
   }
 };
@@ -51,14 +54,14 @@ export const boardInit = (iCols: number, iRows: number) => {
  * neighbor may be outside.
  */
 export const boardIsOn = (hex: TPoint) => {
-  return hex.x >= 0 && hex.x < cols && hex.y >= 0 && hex.y < rows;
+  return hex.x >= 0 && hex.x < numX && hex.y >= 0 && hex.y < numY;
 };
 
 export const boardDraw = (ctx: TContext, transform: Transform) => {
-  for (let c = 0; c < cols; c++) {
-    for (let r = 0; r < rows; r++) {
-      const field: TField = fieldCreate({ x: c, y: r });
-      board[c][r] = field;
+  for (let x = 0; x < numX; x++) {
+    for (let y = 0; y < numY; y++) {
+      const field: TField = fieldCreate({ x, y });
+      board[x][y] = field;
 
       fieldDraw(ctx, transform, field);
       fieldLabelDraw(ctx, transform, field);
@@ -82,9 +85,9 @@ export const boardHighlightField = (
 };
 
 export const boardHighlightFields = (ctx: TContext, transform: Transform) => {
-  for (let c = 0; c < cols; c++) {
-    for (let r = 0; r < rows; r++) {
-      const hex = { x: r, y: c };
+  for (let x = 0; x < numX; x++) {
+    for (let y = 0; y < numY; y++) {
+      const hex = { x, y };
       if (boardHasMarker(hex, EMarker.HIGHLIGHT)) {
         boardHighlightField(ctx, transform, hex);
       }
@@ -112,9 +115,9 @@ const boardRemoveMarker = (hex: TPoint, marker: EMarker) => {
 };
 
 export const boardRemoveAllMarker = (marker: EMarker) => {
-  for (let c = 0; c < cols; c++) {
-    for (let r = 0; r < rows; r++) {
-      boardRemoveMarker({ x: r, y: c }, marker);
+  for (let x = 0; x < numX; x++) {
+    for (let y = 0; y < numY; y++) {
+      boardRemoveMarker({ x, y }, marker);
     }
   }
 };
