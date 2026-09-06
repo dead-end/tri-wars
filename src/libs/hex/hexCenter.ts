@@ -7,9 +7,11 @@ import { TPoint } from '../../types';
  */
 export const hexCenter = (
   transform: Transform,
-  origin: TPoint,
   hex: TPoint,
+  offset: boolean,
 ) => {
+  const origin = offset ? transform.getOriginOffset() : transform.origin;
+
   const result: TPoint = {
     x: origin.x + hex.x * transform.hSpace,
     y:

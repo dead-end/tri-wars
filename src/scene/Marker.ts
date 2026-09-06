@@ -1,4 +1,5 @@
 import { drawFill } from '../libs/draw';
+import { hexCenter } from '../libs/hex/hexCenter';
 import { hexCorner } from '../libs/hex/hexCorner';
 import { EMarker, TContext, TPoint } from '../types';
 import { Board } from './Board';
@@ -72,14 +73,11 @@ export class Marker {
   // TODO: add opacity
   // TODO: maybe an off screen image
   private highlightField = (ctx: TContext, hex: TPoint) => {
-    const hexCenter = this.transform.getHexCenter(
-      this.transform.getOriginOffset(),
-      hex,
-    );
+    const center = hexCenter(this.transform, hex, true);
 
     const points: TPoint[] = [];
     for (let i = 0; i < 6; i++) {
-      points.push(hexCorner(this.transform, hexCenter, i));
+      points.push(hexCorner(this.transform, center, i));
     }
 
     drawFill(ctx, points, '#aaaaaa');

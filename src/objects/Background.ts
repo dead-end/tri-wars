@@ -5,6 +5,7 @@ import { createOffscreenCanvas } from '../libs/canvas';
 import { IObject } from '../interfaces/IObject';
 import { Transform } from '../scene/Transform';
 import { hexCorner } from '../libs/hex/hexCorner';
+import { hexCenter } from '../libs/hex/hexCenter';
 
 interface Star {
   x: number;
@@ -141,18 +142,15 @@ export class Background implements IObject {
     field: TField,
     isInit: boolean[][],
   ) {
-    const hexCenter = this.transform.getHexCenter(
-      this.transform.origin,
-      field.hex,
-    );
+    const center = hexCenter(this.transform, field.hex, false);
 
     for (let i = 0; i < 6; i++) {
       const hex = this.board.getHexNeighbor(field.hex, i);
       const hasNeighbor = this.board.isOnBoard(hex) && isInit[hex.x][hex.y];
 
       if (!hasNeighbor) {
-        const start = hexCorner(this.transform, hexCenter, i);
-        const end = hexCorner(this.transform, hexCenter, i + 1);
+        const start = hexCorner(this.transform, center, i);
+        const end = hexCorner(this.transform, center, i + 1);
         drawLine(ctx, start, end, '#aaaaaa');
       }
     }
