@@ -72,7 +72,7 @@ export class Marker {
   // TODO: add opacity
   // TODO: maybe an off screen image
   private highlightField = (ctx: TContext, hex: TPoint) => {
-    const hexCenter = this.transform.hexCenterGet(
+    const hexCenter = this.transform.getHexCenter(
       this.transform.getOriginOffset(),
       hex,
     );

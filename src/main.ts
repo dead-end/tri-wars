@@ -1,7 +1,7 @@
-import { Game } from './Game';
-import { SceneManager } from './SceneManager';
-import { SpaceScene } from './SpaceScene';
-import { StartScene } from './StartScene';
+import { Game } from './scene/Game';
+import { SceneManager } from './scene/SceneManager';
+import { SpaceScene } from './scene/SpaceScene';
+import { StartScene } from './scene/StartScene';
 
 window.addEventListener('DOMContentLoaded', () => {
   const sceneManager = new SceneManager();

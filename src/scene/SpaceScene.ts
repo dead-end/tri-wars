@@ -1,11 +1,11 @@
 import { hexCornerUpdate } from '../hex/corner';
 import { pixel2Hex } from '../hex/pixel2hex';
 import { EMarker, TPoint } from '../types';
-import { Background } from './Background';
+import { Background } from '../objects/Background';
 import { Board } from './Board';
 import { createCanvas } from './canvas';
-import { IObject } from './IObject';
-import { IScene } from './IScene';
+import { IObject } from '../interfaces/IObject';
+import { IScene } from '../interfaces/IScene';
 import { Marker } from './Marker';
 import { SceneManager } from './SceneManager';
 import { Transform } from './Transform';
@@ -13,7 +13,6 @@ import { Transform } from './Transform';
 export class SpaceScene implements IScene {
   name = 'SpaceScene';
 
-  sceneManager: SceneManager;
   ctx: CanvasRenderingContext2D;
 
   offsetSpeed: number = 20;
@@ -32,8 +31,7 @@ export class SpaceScene implements IScene {
    * The constructor is called with the scene manager to be able to switch the
    * scene.
    */
-  constructor(sceneManager: SceneManager) {
-    this.sceneManager = sceneManager;
+  constructor(private sceneManager: SceneManager) {
     this.ctx = createCanvas('canvas', window.innerWidth, window.innerHeight);
 
     this.transform = new Transform(

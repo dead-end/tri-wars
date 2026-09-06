@@ -1,4 +1,4 @@
-import { IScene } from './IScene';
+import { IScene } from '../interfaces/IScene';
 
 export class SceneManager {
   private scenes: Map<string, IScene> = new Map();

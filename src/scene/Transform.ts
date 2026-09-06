@@ -123,7 +123,7 @@ export class Transform {
    * coordinates of the origin on the canvas.
    */
   // TODO: hexCenterGet is part of transform hexCornerGet not. Why?
-  public hexCenterGet = (origin: TPoint, hex: TPoint) => {
+  public getHexCenter = (origin: TPoint, hex: TPoint) => {
     const result: TPoint = {
       x: origin.x + hex.x * this.hSpace,
       y: origin.y + hex.y * this.vSpace + ((hex.x % 2) * this.vSpace) / 2,

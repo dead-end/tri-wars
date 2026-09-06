@@ -2,10 +2,10 @@ import { drawLine } from '../draw/base';
 import { hexCornerGet } from '../hex/corner';
 import { hexNeighbor } from '../hex/neighbor';
 import { TField } from '../types';
-import { Board } from './Board';
-import { createOffscreenCanvas } from './canvas';
-import { IObject } from './IObject';
-import { Transform } from './Transform';
+import { Board } from '../scene/Board';
+import { createOffscreenCanvas } from '../scene/canvas';
+import { IObject } from '../interfaces/IObject';
+import { Transform } from '../scene/Transform';
 
 interface Star {
   x: number;
@@ -142,7 +142,7 @@ export class Background implements IObject {
     field: TField,
     isInit: boolean[][],
   ) {
-    const hexCenter = this.transform.hexCenterGet(
+    const hexCenter = this.transform.getHexCenter(
       this.transform.origin,
       field.hex,
     );

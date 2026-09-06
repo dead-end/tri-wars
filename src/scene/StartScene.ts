@@ -1,4 +1,4 @@
-import { IScene } from './IScene';
+import { IScene } from '../interfaces/IScene';
 import { SceneManager } from './SceneManager';
 
 export class StartScene implements IScene {

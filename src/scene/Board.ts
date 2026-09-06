@@ -1,3 +1,4 @@
+import { fieldCreate } from '../fields';
 import { TField, TPoint } from '../types';
 
 /**
@@ -17,11 +18,7 @@ export class Board {
     for (let x = 0; x < numX; x++) {
       this.fields[x] = [];
       for (let y = 0; y < numY; y++) {
-        // TODO: replace with createField? Board needs not to know details of the field.
-        this.fields[x][y] = {
-          hex: { x, y },
-          markers: [],
-        };
+        this.fields[x][y] = fieldCreate({ x, y });
       }
     }
   }
