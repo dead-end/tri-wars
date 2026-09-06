@@ -1,5 +1,4 @@
 import { drawLine } from '../draw/base';
-import { hexNeighbor } from '../hex/neighbor';
 import { TField } from '../types';
 import { Board } from '../scene/Board';
 import { createOffscreenCanvas } from '../scene/canvas';
@@ -147,7 +146,7 @@ export class Background implements IObject {
     );
 
     for (let i = 0; i < 6; i++) {
-      const hex = hexNeighbor(field.hex, i);
+      const hex = this.board.getHexNeighbor(field.hex, i);
       const hasNeighbor = this.board.isOnBoard(hex) && isInit[hex.x][hex.y];
 
       if (!hasNeighbor) {
