@@ -1,4 +1,4 @@
-import { fieldCreate } from '../fields';
+import { fieldCreate } from '../libs/fields';
 import { TField, TPoint } from '../types';
 import { mod } from '../libs/utils';
 
@@ -30,19 +30,14 @@ const HEX_NEIGHBOR: TPoint[][] = [NEIGHBOR_EVEN, NEIGHBOR_ODD];
  * currently not used.
  */
 export class Board {
-  numX: number;
-  numY: number;
   fields: TField[][];
 
-  constructor(numX: number, numY: number) {
-    this.numX = numX;
-    this.numY = numY;
-
+  constructor(public num: TPoint) {
     this.fields = [];
 
-    for (let x = 0; x < numX; x++) {
+    for (let x = 0; x < num.x; x++) {
       this.fields[x] = [];
-      for (let y = 0; y < numY; y++) {
+      for (let y = 0; y < num.y; y++) {
         this.fields[x][y] = fieldCreate({ x, y });
       }
     }
@@ -52,7 +47,7 @@ export class Board {
    * The method checks if a hex coordinate is on the board.
    */
   public isOnBoard(hex: TPoint) {
-    return hex.x >= 0 && hex.x < this.numX && hex.y >= 0 && hex.y < this.numY;
+    return hex.x >= 0 && hex.x < this.num.x && hex.y >= 0 && hex.y < this.num.x;
   }
 
   /**

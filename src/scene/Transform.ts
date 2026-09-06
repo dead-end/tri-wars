@@ -133,7 +133,6 @@ export class Transform {
    * The function computes the center of a hexagon on the board, based on the
    * coordinates of the origin on the canvas.
    */
-  // TODO: hexCenterGet is part of transform hexCornerGet not. Why?
   public getHexCenter = (origin: TPoint, hex: TPoint) => {
     const result: TPoint = {
       x: origin.x + hex.x * this.hSpace,

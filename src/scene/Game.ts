@@ -1,4 +1,4 @@
-import { createCanvas } from './canvas';
+import { createCanvas } from '../libs/canvas';
 import { SceneManager } from './SceneManager';
 
 export class Game {

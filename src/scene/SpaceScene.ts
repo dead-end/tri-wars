@@ -1,7 +1,7 @@
 import { EMarker, TPoint } from '../types';
 import { Background } from '../objects/Background';
 import { Board } from './Board';
-import { createCanvas } from './canvas';
+import { createCanvas } from '../libs/canvas';
 import { IObject } from '../interfaces/IObject';
 import { IScene } from '../interfaces/IScene';
 import { Marker } from './Marker';
@@ -38,7 +38,7 @@ export class SpaceScene implements IScene {
       { x: this.ctx.canvas.width, y: this.ctx.canvas.height },
     );
 
-    this.board = new Board(20, 10);
+    this.board = new Board({ x: 20, y: 10 });
     this.marker = new Marker(this.board, this.transform);
 
     this.objects.push(new Background(this.board, this.transform));

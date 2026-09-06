@@ -1,7 +1,7 @@
 import { drawLine } from '../libs/draw';
 import { TField } from '../types';
 import { Board } from '../scene/Board';
-import { createOffscreenCanvas } from '../scene/canvas';
+import { createOffscreenCanvas } from '../libs/canvas';
 import { IObject } from '../interfaces/IObject';
 import { Transform } from '../scene/Transform';
 
