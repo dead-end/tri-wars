@@ -1,3 +1,4 @@
+import { pixel2Hex } from '../hex/pixel2hex';
 import { TPoint } from '../types';
 import { mod } from '../utils';
 
@@ -153,4 +154,8 @@ export class Transform {
     };
     return result;
   };
+
+  public pixel2hex(pixel: TPoint) {
+    return pixel2Hex(pixel, this.size, this.getOriginOffset());
+  }
 }

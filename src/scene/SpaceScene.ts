@@ -1,4 +1,3 @@
-import { pixel2Hex } from '../hex/pixel2hex';
 import { EMarker, TPoint } from '../types';
 import { Background } from '../objects/Background';
 import { Board } from './Board';
@@ -92,12 +91,10 @@ export class SpaceScene implements IScene {
     }
 
     if (this.mouse.x >= 0 && this.mouse.y >= 0) {
-      const pixel: TPoint = { x: this.mouse.x, y: this.mouse.y };
-      const hex = pixel2Hex(
-        pixel,
-        this.transform.size,
-        this.transform.getOriginOffset(),
-      );
+      const hex = this.transform.pixel2hex({
+        x: this.mouse.x,
+        y: this.mouse.y,
+      });
 
       if (this.board.isOnBoard(hex)) {
         this.marker.removeAllMarker(EMarker.HIGHLIGHT);
