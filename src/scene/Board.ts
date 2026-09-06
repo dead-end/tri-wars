@@ -1,6 +1,6 @@
 import { fieldCreate } from '../fields';
 import { TField, TPoint } from '../types';
-import { mod } from '../utils';
+import { mod } from '../libs/utils';
 
 /**
  * We are using a odd-q hex model as described in:

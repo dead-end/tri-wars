@@ -1,4 +1,4 @@
-import { drawFill } from '../draw/base';
+import { drawFill } from '../libs/draw';
 import { TPoint } from '../types';
 import { Transform } from './Transform';
 

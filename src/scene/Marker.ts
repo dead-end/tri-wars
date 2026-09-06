@@ -1,4 +1,4 @@
-import { drawFill } from '../draw/base';
+import { drawFill } from '../libs/draw';
 import { EMarker, TContext, TPoint } from '../types';
 import { Board } from './Board';
 import { Transform } from './Transform';

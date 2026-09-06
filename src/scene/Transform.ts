@@ -1,6 +1,6 @@
-import { pixel2Hex } from '../hex/pixel2hex';
+import { pixel2Hex } from '../libs/pixel2hex';
 import { TPoint } from '../types';
-import { mod } from '../utils';
+import { mod } from '../libs/utils';
 
 export class Transform {
   private corners = [

@@ -1,4 +1,4 @@
-import { drawLine } from '../draw/base';
+import { drawLine } from '../libs/draw';
 import { TField } from '../types';
 import { Board } from '../scene/Board';
 import { createOffscreenCanvas } from '../scene/canvas';
