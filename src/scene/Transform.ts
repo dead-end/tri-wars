@@ -93,6 +93,9 @@ export class Transform {
     this.canvasSize = canvasSize;
   }
 
+  /**
+   * The method updates the offset.
+   */
   public addOffset(x: number, y: number) {
     this.offset.x += x;
 
@@ -111,6 +114,9 @@ export class Transform {
     }
   }
 
+  /**
+   * The method computes the origin with an offset.
+   */
   public getOriginOffset() {
     return {
       x: this.origin.x - this.offset.x,

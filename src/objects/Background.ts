@@ -6,6 +6,7 @@ import { IObject } from '../interfaces/IObject';
 import { Transform } from '../scene/Transform';
 import { hexCorner } from '../libs/hex/hexCorner';
 import { hexCenter } from '../libs/hex/hexCenter';
+import { hexNeighbor } from '../libs/hex/hexNeighbor';
 
 interface Star {
   x: number;
@@ -145,7 +146,7 @@ export class Background implements IObject {
     const center = hexCenter(this.transform, field.hex, false);
 
     for (let i = 0; i < 6; i++) {
-      const hex = this.board.getHexNeighbor(field.hex, i);
+      const hex = hexNeighbor(field.hex, i);
       const hasNeighbor = this.board.isOnBoard(hex) && isInit[hex.x][hex.y];
 
       if (!hasNeighbor) {
