@@ -1,5 +1,4 @@
 import { drawLine } from '../draw/base';
-import { hexCornerGet } from '../hex/corner';
 import { hexNeighbor } from '../hex/neighbor';
 import { TField } from '../types';
 import { Board } from '../scene/Board';
@@ -152,8 +151,8 @@ export class Background implements IObject {
       const hasNeighbor = this.board.isOnBoard(hex) && isInit[hex.x][hex.y];
 
       if (!hasNeighbor) {
-        const start = hexCornerGet(hexCenter, i);
-        const end = hexCornerGet(hexCenter, i + 1);
+        const start = this.transform.getHexCorner(hexCenter, i);
+        const end = this.transform.getHexCorner(hexCenter, i + 1);
         drawLine(ctx, start, end, '#aaaaaa');
       }
     }

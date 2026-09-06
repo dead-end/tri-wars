@@ -1,6 +1,16 @@
 import { TPoint } from '../types';
+import { mod } from '../utils';
 
 export class Transform {
+  private corners = [
+    { x: -0.25, y: -0.5 },
+    { x: +0.25, y: -0.5 },
+    { x: +0.5, y: 0 },
+    { x: +0.25, y: +0.5 },
+    { x: -0.25, y: +0.5 },
+    { x: -0.5, y: 0 },
+  ];
+
   //
   // The outer radius of the hex.
   //
@@ -127,6 +137,19 @@ export class Transform {
     const result: TPoint = {
       x: origin.x + hex.x * this.hSpace,
       y: origin.y + hex.y * this.vSpace + ((hex.x % 2) * this.vSpace) / 2,
+    };
+    return result;
+  };
+
+  /**
+   * The function is called with the center of a hex and computes the corner.
+   */
+  public getHexCorner = (center: TPoint, i: number) => {
+    const idx = mod(i, 6);
+
+    const result: TPoint = {
+      x: center.x + this.corners[idx].x * this.width,
+      y: center.y + this.corners[idx].y * this.height,
     };
     return result;
   };

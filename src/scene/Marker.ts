@@ -1,5 +1,4 @@
 import { drawFill } from '../draw/base';
-import { hexCornerGet } from '../hex/corner';
 import { EMarker, TContext, TPoint } from '../types';
 import { Board } from './Board';
 import { Transform } from './Transform';
@@ -79,7 +78,7 @@ export class Marker {
 
     const points: TPoint[] = [];
     for (let i = 0; i < 6; i++) {
-      points.push(hexCornerGet(hexCenter, i));
+      points.push(this.transform.getHexCorner(hexCenter, i));
     }
 
     drawFill(ctx, points, '#aaaaaa');

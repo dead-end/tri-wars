@@ -1,4 +1,3 @@
-import { hexCornerUpdate } from '../hex/corner';
 import { pixel2Hex } from '../hex/pixel2hex';
 import { EMarker, TPoint } from '../types';
 import { Background } from '../objects/Background';
@@ -42,8 +41,6 @@ export class SpaceScene implements IScene {
 
     this.board = new Board(20, 10);
     this.marker = new Marker(this.board, this.transform);
-
-    hexCornerUpdate(this.transform);
 
     this.objects.push(new Background(this.board, this.transform));
   }
