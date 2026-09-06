@@ -1,17 +1,6 @@
-import { pixel2Hex } from '../libs/pixel2hex';
 import { TPoint } from '../types';
-import { mod } from '../libs/utils';
 
 export class Transform {
-  private corners = [
-    { x: -0.25, y: -0.5 },
-    { x: +0.25, y: -0.5 },
-    { x: +0.5, y: 0 },
-    { x: +0.25, y: +0.5 },
-    { x: -0.25, y: +0.5 },
-    { x: -0.5, y: 0 },
-  ];
-
   //
   // The outer radius of the hex.
   //
@@ -21,13 +10,13 @@ export class Transform {
   // The distance between the centers of two vertical hexagons, which means two
   // hexagon on top of each other.
   //
-  private vSpace: number;
+  vSpace: number;
 
   //
   // The distance between the centers of two horizontal hexagons. The hexagons
   // have an offset to the top or the bottom.
   //
-  private hSpace: number;
+  hSpace: number;
 
   //
   // The size from the left corner to the right corner.
@@ -133,6 +122,7 @@ export class Transform {
    * The function computes the center of a hexagon on the board, based on the
    * coordinates of the origin on the canvas.
    */
+
   public getHexCenter = (origin: TPoint, hex: TPoint) => {
     const result: TPoint = {
       x: origin.x + hex.x * this.hSpace,
@@ -140,21 +130,4 @@ export class Transform {
     };
     return result;
   };
-
-  /**
-   * The function is called with the center of a hex and computes the corner.
-   */
-  public getHexCorner = (center: TPoint, i: number) => {
-    const idx = mod(i, 6);
-
-    const result: TPoint = {
-      x: center.x + this.corners[idx].x * this.width,
-      y: center.y + this.corners[idx].y * this.height,
-    };
-    return result;
-  };
-
-  public pixel2hex(pixel: TPoint) {
-    return pixel2Hex(pixel, this.size, this.getOriginOffset());
-  }
 }

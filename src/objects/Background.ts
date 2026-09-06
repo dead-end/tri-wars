@@ -4,6 +4,7 @@ import { Board } from '../scene/Board';
 import { createOffscreenCanvas } from '../libs/canvas';
 import { IObject } from '../interfaces/IObject';
 import { Transform } from '../scene/Transform';
+import { hexCorner } from '../libs/hex/hexCorner';
 
 interface Star {
   x: number;
@@ -41,7 +42,7 @@ export class Background implements IObject {
 
     const stars = this.initStars(
       this.ctxOff,
-      this.board.numX * this.board.numY,
+      this.board.num.x * this.board.num.y,
     );
     this.drawStars(this.ctxOff, stars);
 
@@ -114,15 +115,15 @@ export class Background implements IObject {
     // A temporary array for the initialize status.
     //
     const isInit: boolean[][] = [];
-    for (let x = 0; x < this.board.numX; x++) {
+    for (let x = 0; x < this.board.num.x; x++) {
       isInit[x] = [];
-      for (let y = 0; y < this.board.numY; y++) {
+      for (let y = 0; y < this.board.num.y; y++) {
         isInit[x][y] = false;
       }
     }
 
-    for (let x = 0; x < this.board.numX; x++) {
-      for (let y = 0; y < this.board.numY; y++) {
+    for (let x = 0; x < this.board.num.x; x++) {
+      for (let y = 0; y < this.board.num.y; y++) {
         const field = this.board.fields[x][y];
 
         this.drawField(ctx, field, isInit);
@@ -150,8 +151,8 @@ export class Background implements IObject {
       const hasNeighbor = this.board.isOnBoard(hex) && isInit[hex.x][hex.y];
 
       if (!hasNeighbor) {
-        const start = this.transform.getHexCorner(hexCenter, i);
-        const end = this.transform.getHexCorner(hexCenter, i + 1);
+        const start = hexCorner(this.transform, hexCenter, i);
+        const end = hexCorner(this.transform, hexCenter, i + 1);
         drawLine(ctx, start, end, '#aaaaaa');
       }
     }

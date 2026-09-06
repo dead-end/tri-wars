@@ -7,6 +7,7 @@ import { IScene } from '../interfaces/IScene';
 import { Marker } from './Marker';
 import { SceneManager } from './SceneManager';
 import { Transform } from './Transform';
+import { hexFromPixel } from '../libs/hex/hexFromPixel';
 
 export class SpaceScene implements IScene {
   name = 'SpaceScene';
@@ -91,7 +92,7 @@ export class SpaceScene implements IScene {
     }
 
     if (this.mouse.x >= 0 && this.mouse.y >= 0) {
-      const hex = this.transform.pixel2hex({
+      const hex = hexFromPixel(this.transform, {
         x: this.mouse.x,
         y: this.mouse.y,
       });

@@ -1,4 +1,5 @@
-import { TPoint } from '../types';
+import { Transform } from '../../scene/Transform';
+import { TPoint } from '../../types';
 
 const SQR_3 = Math.sqrt(3);
 
@@ -76,13 +77,14 @@ const axialRound = (axial: TPoint) => {
  *
  * See: https://www.redblobgames.com/grids/hexagons/
  */
-export const pixel2Hex = (point: TPoint, size: number, origin: TPoint) => {
+export const hexFromPixel = (transform: Transform, point: TPoint) => {
+  const origin = transform.getOriginOffset();
   point.x -= origin.x;
   point.y -= origin.y;
 
   const axialFrac: TPoint = {
-    x: ((2 / 3) * point.x) / size,
-    y: ((-1 / 3) * point.x + (SQR_3 / 3) * point.y) / size,
+    x: ((2 / 3) * point.x) / transform.size,
+    y: ((-1 / 3) * point.x + (SQR_3 / 3) * point.y) / transform.size,
   };
 
   return axial2Off(axialRound(axialFrac));

@@ -1,4 +1,5 @@
 import { drawFill } from '../libs/draw';
+import { hexCorner } from '../libs/hex/hexCorner';
 import { EMarker, TContext, TPoint } from '../types';
 import { Board } from './Board';
 import { Transform } from './Transform';
@@ -44,8 +45,8 @@ export class Marker {
    * The method removes a marker from all fields of the board.
    */
   public removeAllMarker(marker: EMarker) {
-    for (let x = 0; x < this.board.numX; x++) {
-      for (let y = 0; y < this.board.numY; y++) {
+    for (let x = 0; x < this.board.num.x; x++) {
+      for (let y = 0; y < this.board.num.y; y++) {
         this.removeMarker({ x, y }, marker);
       }
     }
@@ -55,8 +56,8 @@ export class Marker {
    * The method highlights all fields that have to highlight marker.
    */
   public highlightFields(ctx: TContext) {
-    for (let x = 0; x < this.board.numX; x++) {
-      for (let y = 0; y < this.board.numY; y++) {
+    for (let x = 0; x < this.board.num.x; x++) {
+      for (let y = 0; y < this.board.num.y; y++) {
         const hex = { x, y };
         if (this.hasMarker(hex, EMarker.HIGHLIGHT)) {
           this.highlightField(ctx, hex);
@@ -78,7 +79,7 @@ export class Marker {
 
     const points: TPoint[] = [];
     for (let i = 0; i < 6; i++) {
-      points.push(this.transform.getHexCorner(hexCenter, i));
+      points.push(hexCorner(this.transform, hexCenter, i));
     }
 
     drawFill(ctx, points, '#aaaaaa');
