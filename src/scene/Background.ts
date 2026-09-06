@@ -1,4 +1,8 @@
-import { boardDraw, boardInit } from '../board/base';
+import { drawLine } from '../draw/base';
+import { hexCornerGet } from '../hex/corner';
+import { hexNeighbor } from '../hex/neighbor';
+import { TField } from '../types';
+import { Board } from './Board';
 import { createOffscreenCanvas } from './canvas';
 import { IObject } from './IObject';
 import { Transform } from './Transform';
@@ -21,12 +25,15 @@ const STAR_COLORS = [
 ];
 
 export class Background implements IObject {
-  transform: Transform;
   ctxOff: OffscreenCanvasRenderingContext2D;
 
-  constructor(transform: Transform) {
-    this.transform = transform;
-
+  /**
+   *
+   */
+  constructor(
+    private board: Board,
+    private transform: Transform,
+  ) {
     this.ctxOff = createOffscreenCanvas(
       this.transform.boardSize.x,
       this.transform.boardSize.y,
@@ -36,21 +43,17 @@ export class Background implements IObject {
 
     const stars = this.initStars(
       this.ctxOff,
-      this.transform.hexNum.x * this.transform.hexNum.y,
+      this.board.numX * this.board.numY,
     );
     this.drawStars(this.ctxOff, stars);
 
-    // TODO: wrong place
-    boardInit(this.transform.hexNum.x, this.transform.hexNum.y);
-
-    // TODO: the drawing should be here. The rest needs an other place.
-    boardDraw(this.ctxOff, this.transform);
+    this.drawBoard(this.ctxOff);
   }
 
   /**
    * The method draws the background with a gradient.
    */
-  drawBackground(ctx: OffscreenCanvasRenderingContext2D) {
+  private drawBackground(ctx: OffscreenCanvasRenderingContext2D) {
     const gradient = ctx.createLinearGradient(
       0,
       0,
@@ -70,7 +73,7 @@ export class Background implements IObject {
   /**
    * The method initializes the stars.
    */
-  initStars(ctx: OffscreenCanvasRenderingContext2D, num: number) {
+  private initStars(ctx: OffscreenCanvasRenderingContext2D, num: number) {
     const stars: Star[] = [];
     for (let i = 0; i < num; i++) {
       const randomColor =
@@ -90,7 +93,7 @@ export class Background implements IObject {
   /**
    * The method draws the stars to the canvas.
    */
-  drawStars(ctx: OffscreenCanvasRenderingContext2D, stars: Star[]) {
+  private drawStars(ctx: OffscreenCanvasRenderingContext2D, stars: Star[]) {
     stars.forEach((star) => {
       ctx.beginPath();
       ctx.globalAlpha = star.opacity;
@@ -102,6 +105,58 @@ export class Background implements IObject {
 
     // IMPORTANT: reset the globalAlpha to 1.0
     ctx.globalAlpha = 1.0;
+  }
+
+  /**
+   * Two hexagons share an edge. This edge will be drawn by the hexagon that
+   * was first created. So we need to keep track of all initialized hexagons.
+   */
+  private drawBoard(ctx: OffscreenCanvasRenderingContext2D) {
+    //
+    // A temporary array for the initialize status.
+    //
+    const isInit: boolean[][] = [];
+    for (let x = 0; x < this.board.numX; x++) {
+      isInit[x] = [];
+      for (let y = 0; y < this.board.numY; y++) {
+        isInit[x][y] = false;
+      }
+    }
+
+    for (let x = 0; x < this.board.numX; x++) {
+      for (let y = 0; y < this.board.numY; y++) {
+        const field = this.board.fields[x][y];
+
+        this.drawField(ctx, field, isInit);
+        isInit[x][y] = true;
+      }
+    }
+  }
+
+  /**
+   * The method draws a field. If draws edges only if it has a neighbor and the
+   * neighbor is not initialized.
+   */
+  private drawField(
+    ctx: OffscreenCanvasRenderingContext2D,
+    field: TField,
+    isInit: boolean[][],
+  ) {
+    const hexCenter = this.transform.hexCenterGet(
+      this.transform.origin,
+      field.hex,
+    );
+
+    for (let i = 0; i < 6; i++) {
+      const hex = hexNeighbor(field.hex, i);
+      const hasNeighbor = this.board.isOnBoard(hex) && isInit[hex.x][hex.y];
+
+      if (!hasNeighbor) {
+        const start = hexCornerGet(hexCenter, i);
+        const end = hexCornerGet(hexCenter, i + 1);
+        drawLine(ctx, start, end, '#aaaaaa');
+      }
+    }
   }
 
   /**

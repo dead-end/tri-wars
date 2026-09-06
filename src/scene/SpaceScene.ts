@@ -1,16 +1,12 @@
-import {
-  boardAddMarker,
-  boardHighlightFields,
-  boardIsOn,
-  boardRemoveAllMarker,
-} from '../board/base';
 import { hexCornerUpdate } from '../hex/corner';
 import { pixel2Hex } from '../hex/pixel2hex';
 import { EMarker, TPoint } from '../types';
 import { Background } from './Background';
+import { Board } from './Board';
 import { createCanvas } from './canvas';
 import { IObject } from './IObject';
 import { IScene } from './IScene';
+import { Marker } from './Marker';
 import { SceneManager } from './SceneManager';
 import { Transform } from './Transform';
 
@@ -25,10 +21,17 @@ export class SpaceScene implements IScene {
 
   mouse: TPoint = { x: -1, y: -1 };
 
+  board: Board;
   transform: Transform;
 
   objects: IObject[] = [];
 
+  marker: Marker;
+
+  /**
+   * The constructor is called with the scene manager to be able to switch the
+   * scene.
+   */
   constructor(sceneManager: SceneManager) {
     this.sceneManager = sceneManager;
     this.ctx = createCanvas('canvas', window.innerWidth, window.innerHeight);
@@ -39,22 +42,34 @@ export class SpaceScene implements IScene {
       { x: this.ctx.canvas.width, y: this.ctx.canvas.height },
     );
 
+    this.board = new Board(20, 10);
+    this.marker = new Marker(this.board, this.transform);
+
     hexCornerUpdate(this.transform);
 
-    this.objects.push(new Background(this.transform));
+    this.objects.push(new Background(this.board, this.transform));
   }
 
+  /**
+   * The method initializes the scene. This means adding event listeners.
+   */
   public create(): void {
     document.addEventListener('keydown', this.keydown);
     document.addEventListener('mousedown', this.mousedown);
   }
 
+  /**
+   * The method removes the event listeners.
+   */
   public destroy(): void {
     document.removeEventListener('keydown', this.keydown);
     document.removeEventListener('mousedown', this.mousedown);
   }
 
-  boardUpdateOffset(key: string) {
+  /**
+   * The method processes arrow keys.
+   */
+  private boardUpdateOffset(key: string) {
     switch (key) {
       case 'ArrowLeft':
         this.transform.addOffset(-this.offsetSpeed, 0);
@@ -71,6 +86,10 @@ export class SpaceScene implements IScene {
     }
   }
 
+  /**
+   * The method processes the keyboard and mouse input from the listeners and
+   * delegates the method call to its objects.
+   */
   public update(deltaTime: number): void {
     if (this.lastKey) {
       this.boardUpdateOffset(this.lastKey);
@@ -85,9 +104,9 @@ export class SpaceScene implements IScene {
         this.transform.getOriginOffset(),
       );
 
-      if (boardIsOn(hex)) {
-        boardRemoveAllMarker(EMarker.HIGHLIGHT);
-        boardAddMarker(hex, EMarker.HIGHLIGHT);
+      if (this.board.isOnBoard(hex)) {
+        this.marker.removeAllMarker(EMarker.HIGHLIGHT);
+        this.marker.addMarker(hex, EMarker.HIGHLIGHT);
       }
 
       this.mouse.x = -1;
@@ -99,14 +118,20 @@ export class SpaceScene implements IScene {
     }
   }
 
+  /**
+   * The method delegates the rendering to its objects.
+   */
   public render(ctx: CanvasRenderingContext2D): void {
     for (const obj of this.objects) {
       obj.render(ctx);
     }
 
-    boardHighlightFields(ctx, this.transform);
+    this.marker.highlightFields(ctx);
   }
 
+  /**
+   *
+   */
   private keydown = (e: KeyboardEvent) => {
     if (
       e.key === 'ArrowLeft' ||
@@ -122,6 +147,9 @@ export class SpaceScene implements IScene {
     }
   };
 
+  /**
+   *
+   */
   private mousedown = (e: MouseEvent) => {
     this.mouse.x = e.x;
     this.mouse.y = e.y;

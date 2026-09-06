@@ -46,11 +46,6 @@ export class Transform {
   offset: TPoint = { x: 0, y: 0 };
 
   //
-  // The number of hexagons (rows - x and cols - y)
-  //
-  hexNum: TPoint;
-
-  //
   // The size of the board, which may be greater than the visible part.
   //
   boardSize: TPoint;
@@ -85,13 +80,11 @@ export class Transform {
       y: this.height / 2,
     };
 
-    this.hexNum = hexNum;
-
     //
     // Compute board sizes
     //
-    const x = 2 * this.size + (this.hexNum.x - 1) * this.hSpace;
-    const y = this.hexNum.y * this.vSpace + this.vSpace / 2;
+    const x = 2 * this.size + (hexNum.x - 1) * this.hSpace;
+    const y = hexNum.y * this.vSpace + this.vSpace / 2;
     this.boardSize = {
       x: Math.ceil(x),
       y: Math.ceil(y),
@@ -129,6 +122,7 @@ export class Transform {
    * The function computes the center of a hexagon on the board, based on the
    * coordinates of the origin on the canvas.
    */
+  // TODO: hexCenterGet is part of transform hexCornerGet not. Why?
   public hexCenterGet = (origin: TPoint, hex: TPoint) => {
     const result: TPoint = {
       x: origin.x + hex.x * this.hSpace,

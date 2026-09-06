@@ -1,16 +1,19 @@
-import { drawFill, drawLine } from '../draw/base';
+/*
+
+import { drawLine } from '../draw/base';
 import { fieldCreate } from '../fields';
 import { hexCornerGet } from '../hex/corner';
 import { hexNeighbor } from '../hex/neighbor';
 import { hexGetId } from '../hex/utils';
 import { Transform } from '../scene/Transform';
-import { EMarker, TContext, TField, TPoint } from '../types';
+import { TContext, TField, TPoint } from '../types';
 
 let numX = 0;
 let numY = 0;
 
 let board: TField[][] = [];
-
+*/
+/*
 const fieldDraw = (ctx: TContext, transform: Transform, field: TField) => {
   const hexCenter = transform.hexCenterGet(transform.origin, field.hex);
 
@@ -24,8 +27,8 @@ const fieldDraw = (ctx: TContext, transform: Transform, field: TField) => {
       drawLine(ctx, start, end, '#aaaaaa');
     }
   }
-};
-
+};*/
+/*
 const fieldLabelDraw = (ctx: TContext, transform: Transform, field: TField) => {
   const hexCenter = transform.hexCenterGet(transform.origin, field.hex);
 
@@ -36,39 +39,59 @@ const fieldLabelDraw = (ctx: TContext, transform: Transform, field: TField) => {
   ctx.fillText(hexGetId(field.hex), hexCenter.x - 10, hexCenter.y + 5);
   ctx.fillText(text, hexCenter.x - 10, hexCenter.y + 15);
 };
-
-export const boardInit = (bx: number, by: number) => {
+*/
+/**
+ * The function initializes the board. This has to be done before we draw the
+ * board, because we check neighbors. We cannot initialize the complete board,
+ * because it is of type TField and does not allow undefined, which is
+ * necessary to draw the board.
+ */
+/*
+const boardInit = (bx: number, by: number) => {
   numX = bx;
   numY = by;
 
-  console.log('r', numX, 'c', numY);
-
   for (let x = 0; x < numX; x++) {
-    board.push([]);
+    board[x] = [];
+    for (let y = 0; y < numY; y++) {
+      const field: TField = fieldCreate({ x, y });
+      board[x][y] = field;
+    }
   }
-};
+};*/
 
 /**
  * The function checks if a hex/field is on the board. For example, when we
  * compute neighbors for a hex at the edge of the board, then a potential
  * neighbor may be outside.
  */
-export const boardIsOn = (hex: TPoint) => {
+/*
+const boardIsOn = (hex: TPoint) => {
   return hex.x >= 0 && hex.x < numX && hex.y >= 0 && hex.y < numY;
-};
+};*/
 
-export const boardDraw = (ctx: TContext, transform: Transform) => {
+/**
+ * The fields are added to the board, while we are drawing the board. The
+ * fieldDraw method relies on the incremental creation. An edge is part of two
+ * hexagons. The first draws the edge. The second sees the first hexagon and
+ * assumes that it already draws the edge.
+ */
+// TODO: Maybe we can use a temp shadow array for the drawing.
+// TODO: not used
+/*
+const boardDraw = (ctx: TContext, transform: Transform) => {
   for (let x = 0; x < numX; x++) {
     for (let y = 0; y < numY; y++) {
       const field: TField = fieldCreate({ x, y });
       board[x][y] = field;
 
-      fieldDraw(ctx, transform, field);
-      fieldLabelDraw(ctx, transform, field);
+      //  fieldDraw(ctx, transform, field);
+      // fieldLabelDraw(ctx, transform, field);
     }
   }
-};
+};*/
 
+/*
 export const boardHighlightField = (
   ctx: TContext,
   transform: Transform,
@@ -121,3 +144,4 @@ export const boardRemoveAllMarker = (marker: EMarker) => {
     }
   }
 };
+*/
